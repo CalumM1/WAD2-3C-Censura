@@ -3,3 +3,7 @@ from django.http import HttpResponse
 
 def index(request):
     return HttpResponse("Censura")
+
+def login(request):
+    return HttpResponse("Login Page")
+
