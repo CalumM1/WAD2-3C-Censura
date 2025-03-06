@@ -21,3 +21,16 @@ def signup(request):
 
 def about(request):
     return HttpResponse("About")
+
+def view_movies(request):
+    return HttpResponse("Movies")
+
+def view_movie(request):
+    return HttpResponse("Movie")
+
+def review(request):
+    return HttpResponse("Movie review")
+
+def create_review(request):
+    return HttpResponse("Create Review")
+
