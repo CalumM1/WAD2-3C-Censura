@@ -10,6 +10,8 @@ class UserProfile(models.Model):
 class Genre(models.Model):
     pass
 
+class Review(models.Model):
+    pass
 
 class Movie(models.Model):
     NAME_MAX_LENGTH = 50
@@ -17,12 +19,9 @@ class Movie(models.Model):
     director = models.CharField(max_length=NAME_MAX_LENGTH)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     #image = models.ImageField(upload_to=MEDIA_ROOT)
-    reviews = models.ManyToManyField()
+    reviews = models.ManyToManyField(to=Review,)
 
 
 class Comment(models.Model):
     pass
 
-
-class Review(models.Model):
-    pass
