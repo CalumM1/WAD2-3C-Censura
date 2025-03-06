@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>
+            Censura -
+            {% block title_block %}
+                Welcome to Censura!
+            {% endblock %}
+        </title>
+
+
+    </head>
+
+    <body>
+    <div>
+        <ul>
+            <li><a href="{% url 'censura:index' %}">Home</a> </li>
+            <li><a href="{% url 'censura:login' %}">Login</a> </li>
+            <li><a href="{% url 'censura:signup' %}">Sign Up</a> </li>
+            <li><a href="{% url 'censura:movies' %}">Movies</a> </li>
+        </ul>
+    </div>
+
+    {% block body_block %}
+
+    {% endblock %}
+
+    </body>
+
+</html>

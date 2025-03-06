@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 
 def index(request):
-    return HttpResponse("Censura")
+    return render(request, 'censura/index.html')
 
 def login(request):
     return HttpResponse("Login Page")
