@@ -5,32 +5,32 @@ def index(request):
     return render(request, 'censura/index.html')
 
 def login(request):
-    return HttpResponse("Login Page")
+    return render(request, 'censura/login.html')
 
 def my_account(request):
-    return HttpResponse("My Account")
+    return render(request, 'censura/account.html')
 
 def my_favourites(request):
-    return HttpResponse("My Favourites")
+    return render(request, 'censura/favourites.html')
 
 def my_reviews(request):
-    return HttpResponse("My Reviews")
+    return render(request, 'censura/read_review.html')
 
 def signup(request):
-    return HttpResponse("Sign Up")
+    return render(request, 'censura/signup.html')
 
 def about(request):
-    return HttpResponse("About")
+    return render(request, 'censura/about.html')
 
 def view_movies(request):
-    return HttpResponse("Movies")
+    return render(request, 'censura/movies.html')
 
 def view_movie(request):
-    return HttpResponse("Movie")
+    return render(request, 'censura/movie.html')
 
 def review(request):
-    return HttpResponse("Movie review")
+    return render(request, 'censura/read_review.html')
 
 def create_review(request):
-    return HttpResponse("Create Review")
+    return render(request, 'censura/write_review.html')
 
