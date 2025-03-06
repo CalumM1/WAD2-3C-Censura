@@ -7,3 +7,5 @@ def index(request):
 def login(request):
     return HttpResponse("Login Page")
 
+def my_account(request):
+    return HttpResponse("My Account")
