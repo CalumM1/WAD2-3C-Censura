@@ -65,7 +65,8 @@ def populate_movies():
             if created:
                 response = requests.get(image)
                 if response.status_code == 200:
-                    m.image.save(image, ContentFile(response.content), save=True)
+                    image_name = f"{movie_id}.jpg"
+                    m.image.save(image_name, ContentFile(response.content), save=True)
                 m.save()
 
 
