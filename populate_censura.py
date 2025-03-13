@@ -51,18 +51,20 @@ def populate_movies():
 
             m, created = Movie.objects.get_or_create(
                 movie_id=movie_id,
-                name=name,
-                description=description,
-                release_date=release_date,
-                director=director,
-                image=image,
+                defaults={
+                    "name": name,
+                    "description": description,
+                    "release_date": release_date,
+                    "director": director,
+                    "image": image,
+                }
             )
-        
-            # establist relationship between genre_ids and Genre table
-            genres = Genre.objects.filter(genre_id__in=genre_ids)
-            m.genre.set(genres)
 
             if created:
+                # establist relationship between genre_ids and Genre table
+                genres = Genre.objects.filter(genre_id__in=genre_ids)
+                m.genre.set(genres)
+                
                 response = requests.get(image)
                 if response.status_code == 200:
                     image_name = f"{movie_id}.jpg"
