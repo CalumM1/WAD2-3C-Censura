@@ -12,20 +12,38 @@ class UserProfile(models.Model):
 
 
 class Genre(models.Model):
-    pass
+    genre_id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.name
+
 
 class Review(models.Model):
     pass
 
+
 class Movie(models.Model):
     NAME_MAX_LENGTH = 50
+    DESC_MAX_LENGTH = 500
+
+    movie_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
-    director = models.CharField(max_length=NAME_MAX_LENGTH)
-    genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
-    #image = models.ImageField(upload_to=MEDIA_ROOT)
-    reviews = models.ManyToManyField(to='Review',)
+    slug = models.SlugField()
+    description = models.TextField(max_length=DESC_MAX_LENGTH)
+    director = models.CharField(
+        max_length=NAME_MAX_LENGTH, default=None, blank=True, null=True)
+    release_date = models.DateField()
+    genre = models.ManyToManyField(Genre)
+    image = models.ImageField(upload_to='movie_images/')
+
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.name)
+        super(Movie, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 
 class Comment(models.Model):
     pass
-
