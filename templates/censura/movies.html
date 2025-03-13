@@ -5,5 +5,15 @@
 {% endblock %}
 
 {% block body_block %}
-	Movies
+	<div class="grid-container">
+		{% for movie in movies %}
+		<a href="{% url 'censura:movie' movie.slug %}">
+			<div class="grid-item">
+				<img src="{{ movie.image.url }}" alt="{{ movie.slug }}">
+				<div class="title">{{movie.name}}</div>
+			</div>
+		</a>
+		{% endfor %}
+
+	</div>
 {% endblock %}

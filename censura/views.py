@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from censura.models import Movie
 
 def index(request):
     return render(request, 'censura/index.html')
@@ -23,7 +24,9 @@ def about(request):
     return render(request, 'censura/about.html')
 
 def view_movies(request):
-    return render(request, 'censura/movies.html')
+    all_movies = Movie.objects.all()
+    context_dict = {"movies" : all_movies}
+    return render(request, 'censura/movies.html', context=context_dict)
 
 def view_movie(request):
     return render(request, 'censura/movie.html')
