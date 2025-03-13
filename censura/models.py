@@ -5,8 +5,7 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    likes = models.ManyToManyField(to='Movie',)
-
+    likes = models.ManyToManyField('Movie', related_name='liked_by') 
     def __str__(self):
         return self.user.username
 
@@ -27,7 +26,7 @@ class Movie(models.Model):
     NAME_MAX_LENGTH = 50
     DESC_MAX_LENGTH = 500
 
-    movie_id = models.AutoField(primary_key=True)
+    # movie_id = models.AutoField(primary_key=True) 
     name = models.CharField(max_length=NAME_MAX_LENGTH, unique=True)
     slug = models.SlugField()
     description = models.TextField(max_length=DESC_MAX_LENGTH)
