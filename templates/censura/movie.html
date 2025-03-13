@@ -1,9 +1,17 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Movie name slug
+	{% if movie %}
+        {{ movie.name }}
+    {% endif %}
 {% endblock %}
 
 {% block body_block %}
-	Movie
+    <h1><strong>{{ movie.name }}</strong></h1>
+    <div>
+        <ul>
+            <li>{{ movie.director }}</li>
+            <li>{{ movie.genre }}</li>
+        </ul>
+    </div>
 {% endblock %}
