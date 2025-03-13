@@ -14,7 +14,7 @@ django.setup()
 from censura.models import Movie, Genre
 
 def populate_movies():
-    for i in range(1, 2):
+    for i in range(1, 10):
         url = "https://api.themoviedb.org/3/discover/movie"
 
         params = {

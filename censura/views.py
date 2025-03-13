@@ -33,6 +33,7 @@ def view_movie(request, movie_name_slug):
 
     try:
         movie = Movie.objects.get(slug=movie_name_slug)
+        movie.genre.prefetch_related("genre").all()
         context_dict['movie'] = movie
 
     except Movie.DoesNotExist:

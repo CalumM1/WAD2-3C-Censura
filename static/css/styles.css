@@ -30,3 +30,7 @@ body {
 .active {
   background-color: #04AA6D;
 }
+
+img {
+  width: 15%;
+}

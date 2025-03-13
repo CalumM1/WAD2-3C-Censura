@@ -7,11 +7,23 @@
 {% endblock %}
 
 {% block body_block %}
-    <h1><strong>{{ movie.name }}</strong></h1>
-    <div>
-        <ul>
-            <li>{{ movie.director }}</li>
-            <li>{{ movie.genre }}</li>
-        </ul>
-    </div>
+    {% if movie %}
+        <h1><strong>{{ movie.name }}</strong></h1>
+        <div>
+            <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+            <ul>
+                <li><strong>Release date:</strong> {{ movie.release_date }}</li>
+                <li><strong>Director:</strong> {{ movie.director }}</li>
+                <li><strong>Genres:</strong></li>
+                    <ul>
+                    {% for genre in movie.genre.all %}
+                        <li>{{ genre.name }}</li>
+                    {% endfor %}
+                    </ul>
+            </ul>
+        </div>
+    {% else %}
+        This movie is not in the database.
+    {% endif %}
+    <div>{{ movie.description }}</div>
 {% endblock %}
