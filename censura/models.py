@@ -5,6 +5,10 @@ from django.template.defaultfilters import slugify
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    likes = models.ManyToManyField(to='Movie',)
+
+    def __str__(self):
+        return self.user.username
 
 
 class Genre(models.Model):
@@ -19,7 +23,7 @@ class Movie(models.Model):
     director = models.CharField(max_length=NAME_MAX_LENGTH)
     genre = models.ForeignKey(Genre, on_delete=models.CASCADE)
     #image = models.ImageField(upload_to=MEDIA_ROOT)
-    reviews = models.ManyToManyField(to=Review,)
+    reviews = models.ManyToManyField(to='Review',)
 
 
 class Comment(models.Model):

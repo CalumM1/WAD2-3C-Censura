@@ -13,6 +13,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
 
     path('username/', views.my_account, name='my_account'),
+    
+    path('edit_profile/', views.edit_profile, name='edit_profile'),
 
     path('username/my-favourites/', views.my_favourites, name='my_favourites'),
 

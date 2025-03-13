@@ -1,0 +1,15 @@
+{% extends 'censura/base.html' %}
+
+{% block title_block %}
+    Edit Account
+{% endblock %}
+
+{% block body_block %}
+    <h2>Edit Account</h2>
+    <form method="post">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        {{ profile_form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+{% endblock %}

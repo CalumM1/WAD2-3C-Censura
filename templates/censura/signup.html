@@ -5,5 +5,10 @@
 {% endblock %}
 
 {% block body_block %}
-	Sign up
+	<h2>Sign Up</h2>
+	<form method="post">
+		{% csrf_token %}
+		{{ user_form.as_p }}
+		<button type="submit">Sign Up</button>
+	</form>
 {% endblock %}
