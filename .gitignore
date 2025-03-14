@@ -171,4 +171,7 @@ cython_debug/
 .pypirc
 
 media/movie_images/
-migrations
+
+
+migrations/**/*
+!migrations/__init__.py
