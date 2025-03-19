@@ -13,13 +13,13 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* Allows positioning of the brand */
+  position: relative;
 }
 
 .navbar .brand {
-  position: absolute; /* Position the brand absolutely */
-  left: 50%; /* Move to the center horizontally */
-  transform: translateX(-50%); /* Adjust for the element's width */
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   color: white;
   font-size: 1.5em;
   font-weight: bold;
@@ -27,7 +27,7 @@ body {
 }
 
 .navbar .nav-links {
-  margin-left: auto; /* Push the links to the right */
+  margin-left: auto;
   display: flex;
   gap: 10px;
 }
