@@ -16,9 +16,9 @@
 
 	<div>
 		<h2>Recent Releases</h2>
-		<ul>
+		<ul class="movie_list">
 			{% for movie in movies_release_order %}
-				<li><img src="{{ movie.image.url }}" alt="{{ movie.name }}"> </li>
+				<li><a href="{% url 'censura:movie' movie.slug %}"><img src="{{ movie.image.url }}" alt="{{ movie.name }}">{{ movie.name }}</a> </li>
 			{% endfor %}
 		</ul>
 	</div>

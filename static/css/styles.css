@@ -52,6 +52,36 @@ body {
   background-color: #04AA6D;
 }
 
+/* ...existing code... */
+
+.movie_list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.movie_list li {
+  text-align: center;
+  flex: 1 1 calc(20% - 20px); /* Adjust the percentage to control the width */
+  max-width: 200px;
+}
+
+.movie_list img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.movie_list li a {
+  text-decoration: none;
+  color: #333;
+  font-weight: bold;
+  display: block;
+  margin-top: 10px;
+}
+
 .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
