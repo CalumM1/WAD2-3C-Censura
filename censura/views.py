@@ -1,11 +1,11 @@
 from django.http import HttpResponse, HttpResponseForbidden
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.urls import reverse
-from .forms import UserForm, UserProfileForm
-from .models import UserProfile
+from .forms import UserForm, UserProfileForm, ReviewForm
+from .models import UserProfile, Review
 
 # from django.contrib.auth.models import User, UserProfile
 
@@ -54,9 +54,12 @@ def my_favourites(request):
     return render(request, 'censura/favourites.html')
 
 
-def my_reviews(request):
-    return render(request, 'censura/read_review.html')
+def my_reviews(request, username=None):  # accept username as an argument
+    if username and request.user.username != username:
+        return HttpResponseForbidden("You are not allowed to view this page.")
 
+    user_reviews = Review.objects.filter(user=request.user)
+    return render(request, 'censura/read_review.html', {'reviews': user_reviews})
 
 def signup(request):
     if request.method == 'POST':
@@ -127,11 +130,38 @@ def view_movie(request, movie_name_slug):
 def review(request):
     return render(request, 'censura/read_review.html')
 
+@login_required
+def create_review(request, movie_name_slug=None):
+    """
+    Handles review creation. If accessed from a movie page, the movie is preselected.
+    If accessed from 'My Account', the user can choose a movie.
+    """
+    movie = None
 
-def create_review(request):
-    return render(request, 'censura/write_review.html')
+    # if provided a movie_name_slug, fetch the movie
+    if movie_name_slug:
+        movie = get_object_or_404(Movie, slug=movie_name_slug)
 
+    if request.method == 'POST':
+        form = ReviewForm(request.POST)
 
+        if form.is_valid():
+            review = form.save(commit=False)
+            review.user = request.user  # assign the current user
+            if movie:
+                review.movie = movie  # assign the movie if provided
+            review.save()
+            return redirect(reverse('censura:my_reviews', args=[request.user.username]))
+    
+    else:
+        # if a movie was provided, remove movie selection from the form
+        if movie:
+            form = ReviewForm(initial={'movie': movie})
+            form.fields.pop('movie')  
+        else:
+            form = ReviewForm()  # allow movie selection if accessed from My Account
+
+    return render(request, 'censura/write_review.html', {'form': form, 'movie': movie})
 
 def ajax_search_movies(request):
     query = request.GET.get('query', '')

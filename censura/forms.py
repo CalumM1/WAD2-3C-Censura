@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile, Movie
+from .models import UserProfile, Movie, Review
 
 from .models import Movie
 
@@ -20,3 +20,13 @@ class UserProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('likes',)
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Review
+        fields = ['movie', 'rating', 'text']
+        widgets = {
+            'rating': forms.NumberInput(attrs={'min': 0, 'max': 10}),
+            'text': forms.Textarea(attrs={'rows': 3}),
+        }

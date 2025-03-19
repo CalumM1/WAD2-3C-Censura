@@ -15,6 +15,8 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     
     path('user/<str:username>/edit-profile/', views.edit_profile, name='edit_profile'),
+    
+    path('user/<str:username>/create-review/', views.create_review, name='create_review_account'),
 
     path('user/<str:username>/', views.my_account, name='my_account'),
 

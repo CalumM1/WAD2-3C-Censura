@@ -26,4 +26,11 @@
         This movie is not in the database.
     {% endif %}
     <div>{{ movie.description }}</div>
+
+    {% if user.is_authenticated %}
+        <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Write a Review</a>
+    {% else %}
+        <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
+    {% endif %}
+
 {% endblock %}

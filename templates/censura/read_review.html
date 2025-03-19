@@ -1,9 +1,26 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Read review
+    My Reviews
 {% endblock %}
 
 {% block body_block %}
-	read review
+    <h2>My Reviews</h2>
+
+    {% if reviews %}
+        <ul>
+            {% for review in reviews %}
+                <li>
+                    <strong>{{ review.movie.name }}</strong> - {{ review.rating }}/10
+                    <p>{{ review.text }}</p>
+                    <small>Reviewed on: {{ review.created_at }}</small>
+                </li>
+                <hr>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>You haven't written any reviews yet.</p>
+    {% endif %}
+
+    <a href="{% url 'censura:create_review_account' user.username %}" class="btn btn-primary">Create a Review</a>
 {% endblock %}

@@ -5,5 +5,14 @@
 {% endblock %}
 
 {% block body_block %}
-	Write review
+<h2>Write a Review for {{ movie.name }}</h2>
+
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Submit Review</button>
+</form>
+
+<a href="{% url 'censura:movies' %}">Back to Movies</a>
+
 {% endblock %}

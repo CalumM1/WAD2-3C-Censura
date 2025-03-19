@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
-
+from django.utils import timezone
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -16,11 +16,6 @@ class Genre(models.Model):
 
     def __str__(self):
         return self.name
-
-
-class Review(models.Model):
-    pass
-
 
 class Movie(models.Model):
     NAME_MAX_LENGTH = 50
@@ -43,6 +38,45 @@ class Movie(models.Model):
     def __str__(self):
         return self.name
 
+class Review(models.Model):
+    movie = models.ForeignKey(
+        'Movie', 
+        on_delete=models.CASCADE, 
+        related_name='reviews',
+        null=True,  
+        blank=True  
+    )
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        related_name='reviews',
+        null=True, 
+        blank=True
+    )
+    rating = models.IntegerField(default=0)
+    text = models.TextField(default="No comment")
+    created_at = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} - {self.movie.name if self.movie else 'Unknown Movie'} ({self.rating}/10)"
+
 
 class Comment(models.Model):
-    pass
+    review = models.ForeignKey(
+        'Review', 
+        on_delete=models.CASCADE, 
+        related_name='comments',
+        null=True,
+        blank=True
+    )
+    user = models.ForeignKey(
+        User, 
+        on_delete=models.CASCADE, 
+        null=True,
+        blank=True
+    )
+    text = models.TextField(default="No comment")  
+    created_at = models.DateTimeField(default=timezone.now) 
+
+    def __str__(self):
+        return f"Comment by {self.user.username if self.user else 'Unknown User'} on {self.review.movie.name if self.review else 'Unknown Movie'}"
