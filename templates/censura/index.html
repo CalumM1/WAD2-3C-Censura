@@ -5,16 +5,21 @@
     <h1><strong>Censura</strong></h1>
 
     <div class="welcome_container">
-		<div class="welcome">
-			<h2>New Users</h2>
-			<a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
-		</div>
-
-
-		<div class="welcome">
-			<h2>Existing Users</h2>
-			<a href="{% url 'censura:login' %}">Login</a> to your account.
-		</div>
+        {% if user.is_authenticated %}
+        <h2>Welcome, {{ user.username }}!</h2>
+        {% else %}
+        <div class="welcome">
+            <h2>New Users</h2>
+            <a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
+        </div>
+        
+        
+        <div class="welcome">
+            <h2>Existing Users</h2>
+            <a href="{% url 'censura:login' %}">Login</a> to your account.
+        </div>
+        {% endif %}
+		
 	</div>
 
 
