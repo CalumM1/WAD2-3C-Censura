@@ -17,6 +17,8 @@
     <body>
     <div>
         <ul class="navbar">
+            <li><a href="{% url 'censura:index' %}">Censura</a> </li>
+            
             {% if user.is_authenticated %}
                 <li><a href="{% url 'censura:logout' %}">Log out</a> </li>
             {% else %}
