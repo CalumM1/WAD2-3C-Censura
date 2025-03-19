@@ -171,5 +171,4 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 
-media/movie_images/
 migrations
