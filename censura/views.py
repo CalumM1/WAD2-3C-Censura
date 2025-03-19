@@ -17,6 +17,7 @@ from censura.models import Movie
 def index(request):
     return render(request, 'censura/index.html')
 
+
 def user_login(request):
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -32,18 +33,23 @@ def user_login(request):
             return HttpResponse('invalid login details')
     return render(request, 'censura/login.html')
 
+
 def user_logout(request):
     logout(request)
     return redirect(reverse('censura:index'))
 
+
 def my_account(request, username):
     return render(request, 'censura/account.html')
+
 
 def my_favourites(request):
     return render(request, 'censura/favourites.html')
 
+
 def my_reviews(request):
     return render(request, 'censura/read_review.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -65,6 +71,7 @@ def signup(request):
 
     return render(request, 'censura/signup.html', {'user_form': user_form})
 
+
 @login_required
 def edit_profile(request):
     if request.method == 'POST':
@@ -78,8 +85,10 @@ def edit_profile(request):
 
     return render(request, 'censura/edit-profile.html', {'profile_form': profile_form})
 
+
 def about(request):
     return render(request, 'censura/about.html')
+
 
 def view_movies(request):
     all_movies = Movie.objects.all()
@@ -88,6 +97,7 @@ def view_movies(request):
     movies = paginator.get_page(page)
     context_dict = {"movies" : movies}
     return render(request, 'censura/movies.html', context=context_dict)
+
 
 def view_movie(request, movie_name_slug):
     context_dict = {}
@@ -102,8 +112,10 @@ def view_movie(request, movie_name_slug):
 
     return render(request, 'censura/movie.html', context=context_dict)
 
+
 def review(request):
     return render(request, 'censura/read_review.html')
+
 
 def create_review(request):
     return render(request, 'censura/write_review.html')
