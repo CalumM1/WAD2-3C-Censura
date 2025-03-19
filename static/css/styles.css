@@ -1,18 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Figtree:wght@400;700&display=swap');
+
 body {
-  font-family: 'Arial'
+  font-family: 'Figtree';
 }
 
-/* Target only navigation bar */
 .navbar {
   list-style-type: none;
   margin: 0;
   padding: 0;
   overflow: hidden;
   background-color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* Allows positioning of the brand */
+}
+
+.navbar .brand {
+  position: absolute; /* Position the brand absolutely */
+  left: 50%; /* Move to the center horizontally */
+  transform: translateX(-50%); /* Adjust for the element's width */
+  color: white;
+  font-size: 1.5em;
+  font-weight: bold;
+  font-family: 'Figtree', sans-serif;
+}
+
+.navbar .nav-links {
+  margin-left: auto; /* Push the links to the right */
+  display: flex;
+  gap: 10px;
 }
 
 .navbar li {
-  float: right;
+  margin: 0 10px;
 }
 
 .navbar li a {
