@@ -53,10 +53,6 @@ body {
 }
 
 
-
-
-
-/* Style for the movie list */
 .movie_list {
   display: flex;
   flex-wrap: wrap;
@@ -64,11 +60,11 @@ body {
   list-style-type: none;
   padding: 0;
   margin: 0;
-  justify-content: left; /* Center the movies horizontally */
+  justify-content: left;
 }
 
 .movie_element {
-  flex: 1 1 calc(20% - 20px); /* Adjust the percentage to control the width */
+  flex: 1 1 calc(20% - 20px);
   max-width: 200px;
   text-align: center;
 }
@@ -89,14 +85,14 @@ body {
 }
 
 .movie_element li {
-  flex: 1 1 calc(20% - 20px); /* Adjust the percentage to control the width */
+  flex: 1 1 calc(20% - 20px);
   max-width: 200px;
   text-align: center;
 }
 
 .grid-container {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); /* Responsive columns */
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
             gap: 10px;
             padding: 20px;
             background-color: #f4f4f4;
