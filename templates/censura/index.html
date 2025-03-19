@@ -4,15 +4,19 @@
 
     <h1><strong>Censura</strong></h1>
 
-    <div>
-        <h2>New Users</h2>
-        <a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
-    </div>
+    <div class="welcome_container">
+		<div class="welcome">
+			<h2>New Users</h2>
+			<a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
+		</div>
 
-    <div>
-        <h2>Existing Users</h2>
-        <a href="{% url 'censura:login' %}">Login</a> to your account.
-    </div>
+
+		<div class="welcome">
+			<h2>Existing Users</h2>
+			<a href="{% url 'censura:login' %}">Login</a> to your account.
+		</div>
+	</div>
+
 
     <div>
         <h2>Recent Releases</h2>
