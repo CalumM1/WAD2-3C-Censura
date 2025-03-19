@@ -1,5 +1,35 @@
 {% extends 'censura/base.html' %}
 
 {% block body_block %}
-	Index
+
+    <h1><strong>Censura</strong></h1>
+
+    <div class="welcome_container">
+		<div class="welcome">
+			<h2>New Users</h2>
+			<a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
+		</div>
+
+
+		<div class="welcome">
+			<h2>Existing Users</h2>
+			<a href="{% url 'censura:login' %}">Login</a> to your account.
+		</div>
+	</div>
+
+
+    <div>
+        <h2>Recent Releases</h2>
+        <ul class="movie_list">
+            {% for movie in movies_release_order %}
+                <li class="movie_element">
+                    <a class="movie" href="{% url 'censura:movie' movie.slug %}">
+                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                        <span>{{ movie.name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock %}

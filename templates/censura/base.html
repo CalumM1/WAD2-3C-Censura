@@ -1,3 +1,4 @@
+<!-- filepath: c:\Computing\Computing\Year_2\WAD2\Team_Project_3C\WAD2-3C-Censura\templates\censura\base.html -->
 <!DOCTYPE html>
 {% load staticfiles %}
 
@@ -13,16 +14,31 @@
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
     </head>
 
-    <body>
     <div>
         <ul class="navbar">
-            <li><a href="{% url 'censura:index' %}">Home</a> </li>
-            <li><a href="{% url 'censura:about' %}">About</a> </li>
-            <li><a href="{% url 'censura:login' %}">Login</a> </li>
-            <li><a href="{% url 'censura:signup' %}">Sign Up</a> </li>
-            <li><a href="{% url 'censura:movies' %}">Movies</a> </li>
+            <li class="brand"><a href="{% url 'censura:index' %}">Censura</a></li>
+
+            <div class="nav-links">
+
+                {% if user.is_authenticated %}
+                    <li><a href="{% url 'censura:logout' %}">Log out</a></li>
+
+                {% else %}
+                    <li><a href="{% url 'censura:login' %}">Login</a></li>
+                    <li><a href="{% url 'censura:signup' %}">Sign Up</a></li>
+
+                {% endif %}
+                
+                <li><a href="{% url 'censura:movies' %}">Movies</a></li>
+                <li><a href="{% url 'censura:about' %}">About</a></li>
+                <li><a href="{% url 'censura:index' %}">Home</a></li>
+
+            </div>
+
         </ul>
     </div>
+
+    <body>
 
     {% block body_block %}
 
