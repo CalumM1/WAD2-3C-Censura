@@ -1,5 +1,13 @@
 {% extends 'censura/base.html' %}
 
 {% block body_block %}
-	Index
+	<div>
+		<h2>New Users</h2>
+		<a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
+	</div>
+
+	<div>
+		<h2>Existing Users</h2>
+		<a href="{% url 'censura:login' %}">Login</a> to your account.
+	</div>
 {% endblock %}
