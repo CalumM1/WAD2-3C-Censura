@@ -12,7 +12,10 @@ class UserForm(forms.ModelForm):
         fields = ('username', 'email', 'password')
 
 class UserProfileForm(forms.ModelForm):
-    likes = forms.ModelMultipleChoiceField(queryset=Movie.objects.all(), widget=forms.CheckboxSelectMultiple())
+    likes = forms.ModelMultipleChoiceField(
+        queryset=Movie.objects.all(), 
+        widget=forms.CheckboxSelectMultiple(),
+        required=False)
     
     class Meta:
         model = UserProfile

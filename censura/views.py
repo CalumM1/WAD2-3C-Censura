@@ -1,4 +1,4 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -11,7 +11,7 @@ from .models import UserProfile
 
 from censura.models import Movie
 
-from censura.models import Movie
+from django.http import JsonResponse
 
 
 def index(request):
@@ -72,7 +72,7 @@ def signup(request):
             
             # Login the user
             login(request, user)
-            return redirect(reverse('censura:edit_profile'))
+            return redirect(reverse('censura:edit_profile', args=[user.username]))
     else:
         user_form = UserForm()
 
@@ -80,15 +80,19 @@ def signup(request):
 
 
 @login_required
-def edit_profile(request):
+def edit_profile(request, username):
+    user = request.user  
+    if user.username != username:  # prevent others from editing
+        return HttpResponseForbidden("You are not allowed to edit this profile.")
+
     if request.method == 'POST':
-        profile_form = UserProfileForm(request.POST, instance=request.user.userprofile)
+        profile_form = UserProfileForm(request.POST, instance=user.userprofile)
 
         if profile_form.is_valid():
             profile_form.save()
-            return redirect(reverse('censura:my_account', args=[request.user.username]))
+            return redirect(reverse('censura:my_account', args=[user.username]))
     else:
-        profile_form = UserProfileForm(instance=request.user.userprofile)
+        profile_form = UserProfileForm(instance=user.userprofile)
 
     return render(request, 'censura/edit-profile.html', {'profile_form': profile_form})
 
@@ -127,3 +131,12 @@ def review(request):
 def create_review(request):
     return render(request, 'censura/write_review.html')
 
+
+
+def ajax_search_movies(request):
+    query = request.GET.get('query', '')
+    if query:
+        movies = Movie.objects.filter(name__icontains=query)[:10]  # Limit results
+        movie_list = [{'name': movie.name} for movie in movies]
+        return JsonResponse({'movies': movie_list})
+    return JsonResponse({'movies': []})

@@ -14,7 +14,7 @@ urlpatterns = [
     
     path('about/', views.about, name='about'),
     
-    path('edit_profile/', views.edit_profile, name='edit_profile'),
+    path('user/<str:username>/edit-profile/', views.edit_profile, name='edit_profile'),
 
     path('user/<str:username>/', views.my_account, name='my_account'),
 
@@ -31,4 +31,8 @@ urlpatterns = [
 
     path('movies/<slug:movie_name_slug>/create-review',
          views.create_review, name='create_review'),
+
+
+     path('ajax/search-movies/', views.ajax_search_movies, name='ajax_search_movies'),
+
 ]
