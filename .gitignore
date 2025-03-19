@@ -168,6 +168,8 @@ cython_debug/
 .idea/
 .vscode/
 
+media/movie_images
+
 # PyPI configuration file
 .pypirc
 
