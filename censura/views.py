@@ -15,7 +15,14 @@ from censura.models import Movie
 
 
 def index(request):
-    return render(request, 'censura/index.html')
+    
+    context_dict = {}
+    
+    movies_release_order = Movie.objects.order_by('-release_date')
+    five_most_revent = movies_release_order[:5]
+    context_dict['movies_release_order'] = five_most_revent
+    
+    return render(request, 'censura/index.html', context=context_dict)
 
 
 def user_login(request):

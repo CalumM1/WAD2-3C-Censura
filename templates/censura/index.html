@@ -14,6 +14,15 @@
 		<a href="{% url 'censura:login' %}">Login</a> to your account.
 	</div>
 
-	
+	<div>
+		<h2>Recent Releases</h2>
+		<ul>
+			{% for movie in movies_release_order %}
+				<li><img src="{{ movie.image.url }}" alt="{{ movie.name }}"> </li>
+			{% endfor %}
+		</ul>
+	</div>
+
+
 
 {% endblock %}
