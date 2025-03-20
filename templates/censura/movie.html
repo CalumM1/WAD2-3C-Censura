@@ -42,7 +42,7 @@
         {% endif %}
     
         <!-- Display existing reviews -->
-        {% if reviews %}
+        {% if user_has_reviewed %}
             <div class="movie-reviews">
                 {% for review in reviews %}
                     <div class="review">

@@ -175,7 +175,12 @@ def view_movie(request, movie_name_slug):
         movie = Movie.objects.get(slug=movie_name_slug)
         movie.genre.prefetch_related("genre").all()
         context_dict['movie'] = movie
-        context_dict['reviews'] = Review.objects.filter(movie=movie.movie_id)
+
+        if request.user.is_authenticated:
+            user_has_reviewed = Review.objects.filter(movie=movie, user=request.user).exists()
+            context_dict['user_has_reviewed'] = user_has_reviewed
+            if user_has_reviewed:
+                context_dict['reviews'] = Review.objects.filter(movie=movie.movie_id)
 
     except Movie.DoesNotExist:
         context_dict['movie'] = None
