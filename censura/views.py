@@ -47,19 +47,69 @@ def user_logout(request):
 
 
 def my_account(request, username):
-    return render(request, 'censura/account.html')
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    user_reviews = Review.objects.filter(user=user_profile.user).order_by('-created_at')[:5]
+    liked_movies = user_profile.likes.all()
+
+    context = {
+        'user_profile': user_profile,
+        'user_reviews': user_reviews,
+        'liked_movies': liked_movies,
+    }
+    return render(request, 'censura/account.html', context)
+
+@login_required
+def my_favourites(request, username):
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    liked_movies = user_profile.likes.all().order_by('-release_date')
+
+    paginator = Paginator(liked_movies, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'items': [
+                {
+                    'type': 'movie',
+                    'name': movie.name,
+                    'image': movie.image.url,
+                    'director': movie.director,
+                    'release_date': str(movie.release_date)
+                } for movie in page_obj
+            ],
+            'has_next': page_obj.has_next(),
+        })
+
+    return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
+# def my_favourites(request):
+#     return render(request, 'censura/favourites.html')
 
 
-def my_favourites(request):
-    return render(request, 'censura/favourites.html')
-
-
-def my_reviews(request, username=None):  # accept username as an argument
-    if username and request.user.username != username:
+@login_required
+def my_reviews(request, username):
+    if request.user.username != username:
         return HttpResponseForbidden("You are not allowed to view this page.")
 
-    user_reviews = Review.objects.filter(user=request.user)
-    return render(request, 'censura/read_review.html', {'reviews': user_reviews})
+    user_reviews = Review.objects.filter(user=request.user).order_by('-created_at')
+    paginator = Paginator(user_reviews, 5)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
+
+    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+        return JsonResponse({
+            'items': [
+                {
+                    'type': 'review',
+                    'movie': review.movie.name,
+                    'rating': review.rating,
+                    'text': review.text
+                } for review in page_obj
+            ],
+            'has_next': page_obj.has_next(),
+        })
+
+    return render(request, 'censura/read_review.html', {'reviews': page_obj})
 
 def signup(request):
     if request.method == 'POST':

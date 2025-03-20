@@ -10,6 +10,11 @@
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
 <ul id="search-results"></ul>
 
+<div class="account-links">
+    <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
+    <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
+    <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
+</div>
 
 {% endblock %}
 

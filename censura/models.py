@@ -39,24 +39,30 @@ class Movie(models.Model):
         return self.name
 
 class Review(models.Model):
+
     movie = models.ForeignKey(
         'Movie', 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        null=True,  
-        blank=True  
+        # null=True,  
+        # blank=True  
     )
     user = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        null=True, 
-        blank=True
+        # null=True, 
+        # blank=True
     )
+    
     rating = models.IntegerField(default=0)
     text = models.TextField(default="No comment")
     created_at = models.DateTimeField(default=timezone.now)
 
+
+    class Meta:
+        unique_together = ('user', 'movie')
+        
     def __str__(self):
         return f"{self.user.username} - {self.movie.name if self.movie else 'Unknown Movie'} ({self.rating}/10)"
 
