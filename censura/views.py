@@ -170,15 +170,16 @@ def view_movies(request):
 
 def view_movie(request, movie_name_slug):
     context_dict = {}
-
+    
     try:
         movie = Movie.objects.get(slug=movie_name_slug)
         movie.genre.prefetch_related("genre").all()
         context_dict['movie'] = movie
+        context_dict['reviews'] = Review.objects.filter(movie=movie.movie_id)
 
     except Movie.DoesNotExist:
         context_dict['movie'] = None
-
+        
     return render(request, 'censura/movie.html', context=context_dict)
 
 
@@ -188,34 +189,57 @@ def review(request):
 @login_required
 def create_review(request, movie_name_slug=None):
     """
-    Handles review creation. If accessed from a movie page, the movie is preselected.
+    Handles review creation and editing. If accessed from a movie page, the movie is preselected.
     If accessed from 'My Account', the user can choose a movie.
     """
     movie = None
-
-    # if provided a movie_name_slug, fetch the movie
+    review = None
+    
+    # If provided a movie_name_slug, fetch the movie
     if movie_name_slug:
         movie = get_object_or_404(Movie, slug=movie_name_slug)
+        # Check if user already has a review for this movie
+        try:
+            review = Review.objects.get(user=request.user, movie=movie)
+        except Review.DoesNotExist:
+            pass
 
     if request.method == 'POST':
-        form = ReviewForm(request.POST, movie_instance=movie)
+        # If editing an existing review
+        if review:
+            form = ReviewForm(request.POST, instance=review, movie_instance=movie)
+        else:
+            form = ReviewForm(request.POST, movie_instance=movie)
 
         if form.is_valid():
-            review = form.save(commit=False)
-            review.user = request.user  # assign the current user
+            new_review = form.save(commit=False)
+            new_review.user = request.user  # assign the current user
             if movie:
-                review.movie = movie  # assign the movie if provided
-            review.save()
-            return redirect(reverse('censura:my_reviews', args=[request.user.username]))
+                new_review.movie = movie  # assign the movie if provided
+            new_review.save()
+            # Redirect to the movie page instead of my-reviews
+            if movie:
+                return redirect(reverse('censura:movie', args=[movie.slug]))
+            else:
+                return redirect(reverse('censura:my_reviews', args=[request.user.username]))
     
     else:
-        if movie:
-            # if a movie was provided, remove movie selection from the form
+        if review:
+            # Editing an existing review
+            form = ReviewForm(instance=review, movie_instance=movie)
+        elif movie:
+            # Creating a new review with pre-selected movie
             form = ReviewForm(movie_instance=movie)
         else:
+            # Creating a completely new review
             form = ReviewForm()
 
-    return render(request, 'censura/write_review.html', {'form': form, 'movie': movie})
+    context = {
+        'form': form, 
+        'movie': movie,
+        'edit_mode': review is not None
+    }
+    return render(request, 'censura/write_review.html', context)
 
 def ajax_search_movies(request):
     query = request.GET.get('query', '')

@@ -27,10 +27,34 @@
     {% endif %}
     <div>{{ movie.description }}</div>
 
-    {% if user.is_authenticated %}
-        <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Write a Review</a>
-    {% else %}
-        <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
-    {% endif %}
+    <!-- Review section -->
+    <div class="review-section">
+        <h3>Reviews</h3>
 
+        {% if user.is_authenticated %}
+            {% if user_has_reviewed %}
+                <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Edit Review</a>
+            {% else %}
+                <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Write a Review</a>
+            {% endif %}
+        {% else %}
+            <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
+        {% endif %}
+    
+        <!-- Display existing reviews -->
+        {% if reviews %}
+            <div class="movie-reviews">
+                {% for review in reviews %}
+                    <div class="review">
+                        <h4>{{ review.user.username }}</h4>
+                        <p>Rating: {{ review.rating }}/10</p>
+                        <p>{{ review.text }}</p>
+                        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <p>No reviews yet. Be the first to review!</p>
+        {% endif %}
+    </div>
 {% endblock %}

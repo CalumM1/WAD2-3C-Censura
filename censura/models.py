@@ -45,14 +45,14 @@ class Review(models.Model):
         'Movie', 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        # null=True,  
+        null=True,  
         # blank=True  
     )
     user = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        # null=True, 
+        null=True, 
         # blank=True
     )
     
