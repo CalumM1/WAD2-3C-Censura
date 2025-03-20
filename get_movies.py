@@ -1,29 +1,23 @@
-import datetime
 import django
 import os
 import requests
 from django.core.files.base import ContentFile
+from datetime import datetime
+from dotenv import load_dotenv
+load_dotenv()
+
 
 os.environ.setdefault('DJANGO_SETTINGS_MODULE',
                       'censura_project.settings')
 django.setup()
-from censura.models import Movie, Genre
-
-
-def get_new_movies():
+from censura.models import Movie, Genre    
+    
+    
+def get_movies(params):    
     url = "https://api.themoviedb.org/3/discover/movie"
 
-    params = {
-        "include_adult": "false",
-        "include_video": "false",
-        "language": "en-US",
-        "page": 1,
-        "primary_release_date.lte": datetime.datetime.now().strftime('%Y-%m-%d'), 
-        "sort_by": "primary_release_date.desc",
-        "without_genres": [99, 10770],
-        "vote_count.gte": 500,
-        "with_original_language": "en",
-    }
+    params = params
+    
     headers = {
         "accept": "application/json",
         "Authorization": f"Bearer {os.getenv('ACCESS_TOKEN')}"
@@ -31,14 +25,13 @@ def get_new_movies():
 
     movies = requests.get(url, params=params, headers=headers).json()[
         'results']
-    
     for movie in movies:
         movie_id = movie['id']
         name = movie['original_title']
         description = movie['overview']
-        release_date = datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d')
+        release_date = datetime.strptime(movie['release_date'], '%Y-%m-%d')
         genre_ids = movie['genre_ids']
-        popularity = movie['popularity']
+        popularity = movie['vote_average']
 
         image = f"https://image.tmdb.org/t/p/original/{movie['poster_path']}"
 
@@ -57,10 +50,10 @@ def get_new_movies():
                 "director": director,
             }
         )
-        
+            
         m.popularity = popularity
-        m.save()
-
+        m.save()  
+            
         if created:
             # establist relationship between genre_ids and Genre table
             genres = Genre.objects.filter(genre_id__in=genre_ids)
@@ -73,10 +66,5 @@ def get_new_movies():
                 if image_name not in os.listdir('media/movie_images/'):
                     m.image.save(image_name, ContentFile(response.content), save=True)
                     m.image = f"movie_images/{image_name}"
-                    
-            m.save()  
-            
-            
-if __name__ == '__main__':
-    print("Getting new movies...")
-    get_new_movies()
+                
+            m.save()

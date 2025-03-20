@@ -20,7 +20,12 @@ def index(request):
     
     movies_release_order = Movie.objects.order_by('-release_date')
     five_most_revent = movies_release_order[:5]
+    
+    movies_by_popularity = Movie.objects.order_by('-popularity')
+    five_most_popular = movies_by_popularity[:5]
+    
     context_dict['movies_release_order'] = five_most_revent
+    context_dict['movies_by_popularity'] = five_most_popular
     
     return render(request, 'censura/index.html', context=context_dict)
 
