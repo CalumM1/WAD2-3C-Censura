@@ -30,3 +30,10 @@ class ReviewForm(forms.ModelForm):
             'rating': forms.NumberInput(attrs={'min': 0, 'max': 10}),
             'text': forms.Textarea(attrs={'rows': 3}),
         }
+        
+    def __init__(self, *args, movie_instance=None, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        # If a movie instance is provided, remove the 'movie' field
+        if movie_instance:
+            self.fields.pop('movie', None)
