@@ -68,7 +68,11 @@ def populate_movies():
                 response = requests.get(image)
                 if response.status_code == 200:
                     image_name = f"{movie_id}.jpg"
-                    m.image.save(image_name, ContentFile(response.content), save=True)
+                    
+                    if image_name not in os.listdir('media/movie_images/'):
+                        m.image.save(image_name, ContentFile(response.content), save=True)
+                        m.image = f"movie_images/{image_name}"
+                    
                 m.save()
 
 
@@ -85,12 +89,12 @@ def populate_genres():
     for genre in genres:
         g = Genre.objects.get_or_create(
             genre_id=genre['id'], name=genre['name'])[0]
-        g.save()
+        g.save()     
 
 
 if __name__ == '__main__':
     print('Populating Genres table...')
     populate_genres()
-
+    
     print('Populating Movies table...')
     populate_movies()
