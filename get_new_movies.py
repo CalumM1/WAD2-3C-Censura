@@ -38,6 +38,7 @@ def get_new_movies():
         description = movie['overview']
         release_date = datetime.datetime.strptime(movie['release_date'], '%Y-%m-%d')
         genre_ids = movie['genre_ids']
+        popularity = movie['popularity']
 
         image = f"https://image.tmdb.org/t/p/original/{movie['poster_path']}"
 
@@ -54,9 +55,11 @@ def get_new_movies():
                 "description": description,
                 "release_date": release_date,
                 "director": director,
-                "image": image,
             }
         )
+        
+        m.popularity = popularity
+        m.save()
 
         if created:
             # establist relationship between genre_ids and Genre table
