@@ -193,7 +193,7 @@ def create_review(request, movie_name_slug=None):
         movie = get_object_or_404(Movie, slug=movie_name_slug)
 
     if request.method == 'POST':
-        form = ReviewForm(request.POST)
+        form = ReviewForm(request.POST, movie_instance=movie)
 
         if form.is_valid():
             review = form.save(commit=False)
@@ -204,12 +204,11 @@ def create_review(request, movie_name_slug=None):
             return redirect(reverse('censura:my_reviews', args=[request.user.username]))
     
     else:
-        # if a movie was provided, remove movie selection from the form
         if movie:
-            form = ReviewForm(initial={'movie': movie})
-            form.fields.pop('movie')  
+            # if a movie was provided, remove movie selection from the form
+            form = ReviewForm(movie_instance=movie)
         else:
-            form = ReviewForm()  # allow movie selection if accessed from My Account
+            form = ReviewForm()
 
     return render(request, 'censura/write_review.html', {'form': form, 'movie': movie})
 
