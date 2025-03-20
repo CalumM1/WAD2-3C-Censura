@@ -6,7 +6,7 @@
 
 {% block body_block %}
     <h2>Edit Account</h2>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ profile_form.as_p }}
         <button type="submit">Save changes</button>

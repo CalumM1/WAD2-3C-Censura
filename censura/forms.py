@@ -19,7 +19,7 @@ class UserProfileForm(forms.ModelForm):
     
     class Meta:
         model = UserProfile
-        fields = ('likes',)
+        fields = ('likes', 'picture')
 
 
 class ReviewForm(forms.ModelForm):

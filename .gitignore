@@ -174,3 +174,5 @@ media/movie_images
 .pypirc
 
 censura/migrations
+
+media/profile_images
