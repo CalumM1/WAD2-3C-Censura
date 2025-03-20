@@ -21,8 +21,12 @@
             <div class="nav-links">
 
                 {% if user.is_authenticated %}
-                    <li><a href="{% url 'censura:my_account' user.username %}">My Account</a></li>
-                    <li><a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a></li>
+                    <li><a href="{% url 'censura:my_account' user.username %}">
+                        My Account</a></li>
+
+                    <li><a href="{% url 'censura:edit_profile' user.username %}">
+                        Edit Profile</a></li>
+                        
                     <li><a href="{% url 'censura:logout' %}">Log out</a></li>
                 {% else %}
                     <li><a href="{% url 'censura:login' %}">Login</a></li>

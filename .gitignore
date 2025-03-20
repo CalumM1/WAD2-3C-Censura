@@ -173,4 +173,4 @@ media/movie_images
 # PyPI configuration file
 .pypirc
 
-migrations
+censura/migrations
