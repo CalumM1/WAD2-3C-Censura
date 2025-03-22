@@ -194,23 +194,19 @@ def review(request):
 @login_required
 def create_review(request, movie_name_slug=None):
     """
-    Handles review creation and editing. If accessed from a movie page, the movie is preselected.
-    If accessed from 'My Account', the user can choose a movie.
+    Handles review creation and editing.
     """
     movie = None
     review = None
     
-    # If provided a movie_name_slug, fetch the movie
     if movie_name_slug:
         movie = get_object_or_404(Movie, slug=movie_name_slug)
-        # Check if user already has a review for this movie
         try:
             review = Review.objects.get(user=request.user, movie=movie)
         except Review.DoesNotExist:
             pass
 
     if request.method == 'POST':
-        # If editing an existing review
         if review:
             form = ReviewForm(request.POST, instance=review, movie_instance=movie)
         else:
@@ -218,11 +214,11 @@ def create_review(request, movie_name_slug=None):
 
         if form.is_valid():
             new_review = form.save(commit=False)
-            new_review.user = request.user  # assign the current user
+            new_review.user = request.user 
             if movie:
-                new_review.movie = movie  # assign the movie if provided
+                new_review.movie = movie
             new_review.save()
-            # Redirect to the movie page instead of my-reviews
+
             if movie:
                 return redirect(reverse('censura:movie', args=[movie.slug]))
             else:
@@ -230,13 +226,10 @@ def create_review(request, movie_name_slug=None):
     
     else:
         if review:
-            # Editing an existing review
             form = ReviewForm(instance=review, movie_instance=movie)
         elif movie:
-            # Creating a new review with pre-selected movie
             form = ReviewForm(movie_instance=movie)
         else:
-            # Creating a completely new review
             form = ReviewForm()
 
     context = {
