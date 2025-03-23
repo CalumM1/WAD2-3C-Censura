@@ -29,32 +29,54 @@
 
     <!-- Review section -->
     <div class="review-section">
-        <h3>Reviews</h3>
+        <h3>Your Reviews</h3>
 
         {% if user.is_authenticated %}
+            <!-- Display existing user reviews -->
             {% if user_has_reviewed %}
+            <div class="movie-reviews">
+                {% for review in user_reviews %}
                 <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Edit Review</a>
+                <div class="review">
+                    <h4> Reviewed by {{ review.user.username }}</h4>
+                    <p>Rating: {{ review.rating }}/10</p>
+                    <p>{{ review.text }}</p>
+                    <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+                </div>
+                {% endfor %}
+            </div>
             {% else %}
-                <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Write a Review</a>
+            <p>Have you watched this film and want to share your thoughts?</p>
+            <a href="{% url 'censura:create_review' movie.slug %}" class="btn btn-primary">Write a Review</a>
             {% endif %}
         {% else %}
             <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
         {% endif %}
+    </div>
+
     
-        <!-- Display existing reviews -->
-        {% if user_has_reviewed %}
-            <div class="movie-reviews">
-                {% for review in reviews %}
-                    <div class="review">
-                        <h4>{{ review.user.username }}</h4>
-                        <p>Rating: {{ review.rating }}/10</p>
-                        <p>{{ review.text }}</p>
-                        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
-                    </div>
-                {% endfor %}
+    <h3>All Reviews</h3>
+    <label for="sort">Sort by:</label>
+    <select id="sort" class="sort-dropdown">
+        <option value="created_at" selected>Newest</option>
+        <option value="likes">Most Liked</option>
+        <option value="rating">Highest Rated</option>
+    </select>
+    <div class="review-section" data-movie-slug="{{ movie.slug }}">
+        <!-- Display top reviews -->
+        {% if all_reviews %}
+        <div class="movie-reviews">
+            {% for review in all_reviews %}
+            <div class="review">
+                <h4>Reviewed by {{ review.user.username }}</h4>
+                <p>Rating: {{ review.rating }}/10</p>
+                <p>{{ review.text }}</p>
+                <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
             </div>
+            {% endfor %}
+        </div>
         {% else %}
-            <p>No reviews yet. Be the first to review!</p>
+        <p>No reviews yet. Be the first to review!</p>
         {% endif %}
     </div>
 {% endblock %}

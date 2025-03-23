@@ -57,6 +57,7 @@ class Review(models.Model):
     )
     
     rating = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
     text = models.TextField(default="No comment")
     created_at = models.DateTimeField(default=timezone.now)
 
