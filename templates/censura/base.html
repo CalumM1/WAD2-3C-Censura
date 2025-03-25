@@ -12,6 +12,8 @@
             {% endblock %}
         </title>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <meta name="csrf-token" content="{{ csrf_token }}">
+        <script src="{% static 'js/heart_button.js' %}"></script>
     </head>
 
     <div>
@@ -44,7 +46,6 @@
     </div>
 
     <body>
-
     {% block body_block %}
 
     {% endblock %}

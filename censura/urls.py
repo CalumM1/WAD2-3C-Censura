@@ -26,14 +26,10 @@ urlpatterns = [
 
     path('movies/', views.view_movies, name='movies'),
 
+    path('movies/<slug:movie_name_slug>/toggle-favourite/', views.toggle_favourite, name='toggle_favourite'),
     path('movies/<slug:movie_name_slug>', views.view_movie, name='movie'),
-
-    path('movies/<slug:movie_name_slug>/review/<str:username>',
-         views.review, name='review'),
-
-    path('movies/<slug:movie_name_slug>/create-review',
-         views.create_review, name='create_review'),
-
+    path('movies/<slug:movie_name_slug>/review/<str:username>', views.review, name='review'),
+    path('movies/<slug:movie_name_slug>/create-review', views.create_review, name='create_review'),
 
      path('ajax/search-movies/', views.ajax_search_movies, name='ajax_search_movies'),
      path('movies/<slug:movie_name_slug>/sorted-reviews/', views.ajax_sorted_reviews, name='ajax_sorted_reviews'),

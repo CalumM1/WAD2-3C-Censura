@@ -1,4 +1,4 @@
-from django.http import HttpResponse, HttpResponseForbidden
+from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
@@ -84,6 +84,21 @@ def my_favourites(request, username):
         })
 
     return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
+
+@login_required
+def toggle_favourite(request, movie_name_slug):
+    print("Toggle favourite view reached for:", movie_name_slug)
+    movie = get_object_or_404(Movie, slug=movie_name_slug)
+    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+
+    if movie in user_profile.likes.all():
+        user_profile.likes.remove(movie)
+        is_favourite = False
+    else:
+        user_profile.likes.add(movie)
+        is_favourite = True
+
+    return JsonResponse({'success': True, 'is_favourite': is_favourite})
 
 
 @login_required
@@ -187,6 +202,8 @@ def view_movie(request, movie_name_slug):
     except Movie.DoesNotExist:
         context_dict['movie'] = None
 
+    context_dict['movie_name_slug'] = movie_name_slug
+
     return render(request, 'censura/movie.html', context=context_dict)
 
 
@@ -196,9 +213,6 @@ def review(request):
 
 @login_required
 def create_review(request, movie_name_slug=None):
-    """
-    Handles review creation and editing.
-    """
     movie = None
     review = None
 
