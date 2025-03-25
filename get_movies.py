@@ -65,6 +65,7 @@ def get_movies(params):
                 
                 if image_name not in os.listdir('media/movie_images/'):
                     m.image.save(image_name, ContentFile(response.content), save=True)
-                    m.image = f"movie_images/{image_name}"
+                
+                m.image = f"movie_images/{image_name}"
                 
             m.save()

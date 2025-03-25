@@ -12,6 +12,8 @@
             {% endblock %}
         </title>
         <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+        <meta name="csrf-token" content="{{ csrf_token }}">
+        <script src="{% static 'js/heart_button.js' %}"></script>
     </head>
 
     <div>
@@ -44,7 +46,6 @@
     </div>
 
     <body>
-
     {% block body_block %}
 
     {% endblock %}
@@ -53,6 +54,7 @@
         var searchMoviesUrl = "{% url 'censura:ajax_search_movies' %}";  // Pass Django URL to JS
     </script>
     <script src="{% static 'js/movie_search.js' %}"></script>
+    <script src="{% static 'js/review_sort.js' %}"></script>
     
     </body>
 

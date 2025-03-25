@@ -29,7 +29,7 @@ class Movie(models.Model):
     director = models.CharField(
         max_length=NAME_MAX_LENGTH, default=None, blank=True, null=True)
     release_date = models.DateField()
-    popularity = models.FloatField()
+    popularity = models.FloatField(null=True)
     genre = models.ManyToManyField(Genre)
     image = models.ImageField(upload_to='movie_images/')
 
@@ -46,18 +46,19 @@ class Review(models.Model):
         'Movie', 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        # null=True,  
+        null=True,  
         # blank=True  
     )
     user = models.ForeignKey(
         User, 
         on_delete=models.CASCADE, 
         related_name='reviews',
-        # null=True, 
+        null=True, 
         # blank=True
     )
     
     rating = models.IntegerField(default=0)
+    likes = models.IntegerField(default=0)
     text = models.TextField(default="No comment")
     created_at = models.DateTimeField(default=timezone.now)
 
