@@ -11,6 +11,7 @@
         <h1><strong>{{ movie.name }}</strong></h1>
         <div>
             <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+            {% if user.is_authenticated %}
             <button class="favourite-btn" data-movie-slug="{{ movie.slug }}">
                 <span class="heart {% if movie in user.userprofile.likes.all %}filled{% else %}empty{% endif %}">
                     {% if movie in user.userprofile.likes.all %}
@@ -20,6 +21,7 @@
                     {% endif %}
                 </span>
             </button>
+            {% endif %}
 
             <ul>
                 <li><strong>Release date:</strong> {{ movie.release_date }}</li>
