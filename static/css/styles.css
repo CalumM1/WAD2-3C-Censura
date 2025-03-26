@@ -139,7 +139,7 @@ body {
   background-color: #555;
 }
 
-/* For reviews layout */
+/* REVIEWS LAYOUT */
 .movie-reviews {
   display: flex;
   flex-direction: column;
@@ -173,36 +173,50 @@ body {
   margin-bottom: 0;
 }
 
+/* DISPLAY MOVIES */
+.movie-card {
+    position: relative;
+    overflow: hidden;
+    border: none;
+}
 
-.grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
-            gap: 10px;
-            padding: 20px;
-            background-color: #f4f4f4;
-        }
+.movie-card img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transition: transform 0.3s ease-in-out;
+}
 
-        .grid-item {
-            text-align: center;
-            background: white;
-            padding: 10px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-        }
+.movie-card:hover img {
+    transform: scale(1.05);
+}
 
-        .grid-item img {
-            width: 50%;
-            height: auto;
-            display: block;
-            border-radius: 10px;
-        }
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
 
-        .title {
-            margin-top: 10px;
-            font-size: 1.2em;
-            font-weight: bold;
-            color: #333;
-        }
+.movie-card:hover .overlay {
+    opacity: 1;
+}
+
+.overlay-text {
+    font-size: 1.2rem;
+    font-weight: bold;
+    padding: 10px;
+}
+
 
 img {
   width: 15%;
