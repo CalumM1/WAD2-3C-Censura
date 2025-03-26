@@ -1,8 +1,6 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import UserProfile, Movie, Review
-
-from .models import Movie
+from .models import UserProfile, Movie, Review, Comment
 
 class UserForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
@@ -37,3 +35,21 @@ class ReviewForm(forms.ModelForm):
         # If a movie instance is provided, remove the 'movie' field
         if movie_instance:
             self.fields.pop('movie', None)
+            
+class CommentForm(forms.ModelForm):
+    text = forms.TextInput()
+    class Meta:
+        model = Comment
+        fields = ('text',)
+        
+        widgets = {
+            'text': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Add a comment...',
+                'rows': 3
+            }),
+        }
+        labels = {
+            'text': 'Leave a comment',
+        }
+        
