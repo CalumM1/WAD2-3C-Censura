@@ -65,25 +65,31 @@ def my_favourites(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     liked_movies = user_profile.likes.all().order_by('-release_date')
 
-    paginator = Paginator(liked_movies, 6)
-    page_number = request.GET.get('page')
-    page_obj = paginator.get_page(page_number)
+    # paginator = Paginator(liked_movies, 6)
+    # page_number = request.GET.get('page')
+    # page_obj = paginator.get_page(page_number)
 
-    if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-        return JsonResponse({
-            'items': [
-                {
-                    'type': 'movie',
-                    'name': movie.name,
-                    'image': movie.image.url,
-                    'director': movie.director,
-                    'release_date': str(movie.release_date)
-                } for movie in page_obj
-            ],
-            'has_next': page_obj.has_next(),
-        })
+    # if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
+    #     return JsonResponse({
+    #         'items': [
+    #             {
+    #                 'type': 'movie',
+    #                 'name': movie.name,
+    #                 'image': movie.image.url,
+    #                 'director': movie.director,
+    #                 'release_date': str(movie.release_date)
+    #             } for movie in page_obj
+    #         ],
+    #         'has_next': page_obj.has_next(),
+    #     })
+    paginator = Paginator(liked_movies, 24)
+    page = request.GET.get('page')
+    movies = paginator.get_page(page)
+    context_dict = {"movies": movies}
+    return render(request, 'censura/movies.html', context=context_dict)
 
-    return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
+    
+    #return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
 
 @login_required
 def toggle_favourite(request, movie_name_slug):
