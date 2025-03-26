@@ -30,4 +30,9 @@
 		<a href="?page={{ movies.paginator.num_pages }}">Last</a>
 		{% endif %}
 	</div>
+
+	{% if favourites %}
+		<a href="{% url 'censura:my_account' user.username %}">Back</a>
+	{% endif %}
+
 {% endblock %}

@@ -85,7 +85,7 @@ def my_favourites(request, username):
     paginator = Paginator(liked_movies, 24)
     page = request.GET.get('page')
     movies = paginator.get_page(page)
-    context_dict = {"movies": movies}
+    context_dict = {"movies": movies, "favourites": True}
     return render(request, 'censura/movies.html', context=context_dict)
 
     
