@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block body_block %}
-	<div class="grid-container">
+	<!-- <div class="grid-container">
 		{% for movie in movies %}
 		<a href="{% url 'censura:movie' movie.slug %}">
 			<div class="grid-item">
@@ -14,7 +14,27 @@
 			</div>
 		</a>
 		{% endfor %}
+	</div> -->
 
+	<div class="container">
+		
+		<div class="row">
+			{% for movie in movies %}
+			<div class="col-lg-2 col-md-4 col-sm-6">
+				<a style="text-decoration: none;color: inherit;" href="{% url 'censura:movie' movie.slug %}">
+					<div class="card movie-card text-center">
+						<img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.slug }}">
+						<div class="overlay">
+							<p class="overlay-text">{{ movie.name }}</p>
+						</div>
+					</div>
+				</a>
+				
+			</div>
+			{% endfor %}
+		</div>
+		
+	
 	</div>
 
 	<div class="pagination">
