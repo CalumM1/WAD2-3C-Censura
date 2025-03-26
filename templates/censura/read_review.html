@@ -8,17 +8,21 @@
 
 <h2>{{ user.username }}'s Reviews</h2>
 
-<div id="infinite-scroll-container">
+<div id="infinite-scroll-container" class="movie-reviews">
     {% for review in reviews %}
-        <div class="scroll-item">
+        <div class="review scroll-item">
             <h4>{{ review.movie.name }}</h4>
             <p>Rating: {{ review.rating }}/10</p>
             <p>{{ review.text }}</p>
+            <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
+            <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
         </div>
     {% empty %}
         <p>No reviews yet.</p>
     {% endfor %}
 </div>
+<a href="{% url 'censura:my_account' user.username %}">Back</a>
+
 
 <!-- Infinite Scroll Loader -->
 <div id="loading" style="display: none;">Loading more...</div>

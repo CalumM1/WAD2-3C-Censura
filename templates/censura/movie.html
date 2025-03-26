@@ -40,7 +40,7 @@
     <div>{{ movie.description }}</div>
 
     <!-- Review section -->
-    <div class="review-section">
+    <div id="user-review" class="review-section">
         <h3>Your Reviews</h3>
 
         {% if user.is_authenticated %}
@@ -74,13 +74,13 @@
         <option value="likes">Most Liked</option>
         <option value="rating">Highest Rated</option>
     </select>
-    <div class="review-section" data-movie-slug="{{ movie.slug }}">
+    <div id="all-reviews-container" class="review-section" data-movie-slug="{{ movie.slug }}">
         <!-- Display top reviews -->
         {% if all_reviews %}
-        <div class="movie-reviews">
+        <div id="all-reviews" class="movie-reviews">
             {% for review in all_reviews %}
-            <div class="review">
-                <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>  
+            <div class="review" data-review-url="{% url 'censura:review' movie.slug review.user.username %}">
+                <h4>Reviewed by {{ review.user.username }}</h4>
                 <p>Rating: {{ review.rating }}/10</p>
                 <p>{{ review.text }}</p>
                 <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
