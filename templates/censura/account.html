@@ -5,16 +5,22 @@
 {% endblock %}
 
 {% block body_block %}
-	Account
+
+    <h2>{{ user.username }}'s Account</h2>
+    {% if user.userprofile.picture %}
+        <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+    {% else %}
+        <p>No profile picture uploaded.</p>
+    {% endif %}
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
-<ul id="search-results"></ul>
+    <ul id="search-results"></ul>
 
-<div class="account-links">
-    <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
-    <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
-    <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
-</div>
+    <div class="account-links">
+        <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
+        <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
+        <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
+    </div>
 
 {% endblock %}
 

@@ -162,7 +162,7 @@ def edit_profile(request, username):
         return HttpResponseForbidden("You are not allowed to edit this profile.")
 
     if request.method == 'POST':
-        profile_form = UserProfileForm(request.POST, instance=user.userprofile)
+        profile_form = UserProfileForm(request.POST, request.FILES, instance=user.userprofile)
 
         if profile_form.is_valid():
             profile_form.save()

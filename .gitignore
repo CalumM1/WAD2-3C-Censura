@@ -169,6 +169,7 @@ cython_debug/
 .vscode/
 
 media/movie_images
+media/profile_images
 
 # PyPI configuration file
 .pypirc
