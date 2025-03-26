@@ -1,7 +1,7 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Account
+	{{ user.username }}'s account
 {% endblock %}
 
 {% block body_block %}
@@ -10,16 +10,21 @@
     {% if user.userprofile.picture %}
         <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
     {% else %}
-        <p>No profile picture uploaded.</p>
+        <img src="media/default_picture.jpg" alt="Profile Picture" style="width: 150px; height: auto;">
     {% endif %}
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
     <ul id="search-results"></ul>
 
     <div class="account-links">
-        <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
-        <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
-        <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
+    {% if user != user_profile.user %}   
+            <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
+            <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
+            <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
+    {% else %}
+            <a href="{% url 'censura:my_reviews' user.username %}">See {{ user.username }}'s Reviews</a>
+            <a href="{% url 'censura:my_favourites' user.username %}">See {{ user.username }}'s Favourites</a>
+    {% endif %}
     </div>
 
 {% endblock %}
