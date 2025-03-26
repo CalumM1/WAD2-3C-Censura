@@ -4,8 +4,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.urls import reverse
-from .forms import UserForm, UserProfileForm, ReviewForm
-from .models import UserProfile, Review, Movie
+from .forms import UserForm, UserProfileForm, ReviewForm, CommentForm
+from .models import UserProfile, Review, Movie, Comment
 from django.http import JsonResponse
 
 
@@ -207,8 +207,33 @@ def view_movie(request, movie_name_slug):
     return render(request, 'censura/movie.html', context=context_dict)
 
 
-def review(request):
-    return render(request, 'censura/read_review.html')
+def review(request, movie_name_slug, username):
+    
+    movie = get_object_or_404(Movie, slug=movie_name_slug)
+    user = UserProfile.objects.get(user__username=username).user
+    review = get_object_or_404(Review, movie=movie, user=user)
+    comments = Comment.objects.filter(review=review)
+    
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        
+        if form.is_valid():
+            new_comment = form.save(commit=False)
+            new_comment.user = request.user
+            new_comment.review = review
+            new_comment.save()
+            
+            return redirect(reverse('censura:review', args=[movie.slug, review.user.username]))
+    else:
+        form = CommentForm()
+
+    context_dict = {
+        'movie': movie,
+        'review': review,
+        'form': form,
+        'comments': comments,
+    }
+    return render(request, 'censura/review_thread.html', context=context_dict)
 
 
 @login_required

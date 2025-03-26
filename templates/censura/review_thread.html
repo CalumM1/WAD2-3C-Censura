@@ -1,0 +1,59 @@
+{% extends 'censura/base.html' %}
+{% load static %}
+{% block title_block %}
+{{ movie.name }}: {{ review.user.username }}'s Review
+{% endblock %}
+
+{% block body_block %}
+
+<h2>{{ review.user.username }}'s Review</h2>
+
+<div style="display: flex; justify-content: space-between; align-items: flex-start;">
+    <div class="review">
+        <h4>Reviewed by {{ review.user.username }}</h4>
+        <p>Rating: {{ review.rating }}/10</p>
+        <p>{{ review.text }}</p>
+        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+
+        <div>
+            {% for comment in comments %}
+            <div class="review">
+                {% if comment.user == review.user %}
+                    <h4 style="color: blue">{{ comment.user.username }}</h4>
+                {% else %}
+                    <h4>{{ comment.user.username }}</h4>
+                {% endif %}
+
+                <p>{{ comment.text }}</p>
+                <p class="review-date">{{ comment.created_at|date:"F d, Y" }}</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        {% if user.is_authenticated %}
+        <form method="POST" action="{% url 'censura:review' movie.slug review.user.username %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Submit Comment</button>
+        </form>
+        {% else %}
+        <p><a href="{% url 'censura:login' %}">Login</a> to make a comment</p>
+        {% endif %}
+    </div>
+
+    
+    
+    <div class="movie_poster">
+        <h1><strong>{{ movie.name }}</strong></h1>
+        <img class="movie" src="{{ movie.image.url }}" alt="{{ movie.name }}"  style="width: 70%">
+    </div>
+    
+</div>
+
+
+
+
+
+
+
+{% endblock %}

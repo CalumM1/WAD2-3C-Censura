@@ -69,7 +69,7 @@ body {
   text-align: center;
 }
 
-.movie img {
+.movie img{
   width: 100%;
   height: auto;
   border-radius: 10px;
@@ -90,6 +90,14 @@ body {
   text-align: center;
 }
 
+
+.movie_poster {
+  width:50%;
+  box-sizing: border-box;
+  justify-content: center;        /* Center content vertically */
+    align-items: center;            /* Center content horizontally */
+    text-align: center; 
+}
 
 .welcome_container {
   display: flex;
