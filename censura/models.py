@@ -7,6 +7,7 @@ class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     likes = models.ManyToManyField('Movie', related_name='liked_by') 
     picture = models.ImageField(upload_to='profile_images/', blank=True)
+    friends = models.ManyToManyField('self', symmetrical=True, related_name='friends', blank=True)
     def __str__(self):
         return self.user.username
 
