@@ -80,7 +80,7 @@
         <div class="movie-reviews">
             {% for review in all_reviews %}
             <div class="review">
-                <h4>Reviewed by {{ review.user.username }}</h4>
+                <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>  
                 <p>Rating: {{ review.rating }}/10</p>
                 <p>{{ review.text }}</p>
                 <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>

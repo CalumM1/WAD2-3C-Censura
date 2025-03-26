@@ -1,12 +1,12 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	{{ user.username }}'s account
+	{{ user_profile.user.username }}'s account
 {% endblock %}
 
 {% block body_block %}
 
-    <h2>{{ user.username }}'s Account</h2>
+    <h2>{{ user_profile.user.username }}'s Account</h2>
     {% if user.userprofile.picture %}
         <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
     {% else %}
