@@ -159,7 +159,7 @@ body {
   background-color: #f9f9f9;
 }
 
-.review h4 {
+.review h4, .review h5{
   margin-top: 0;
   color: #333;
   text-align: right;

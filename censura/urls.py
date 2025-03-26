@@ -30,6 +30,7 @@ urlpatterns = [
     path('movies/<slug:movie_name_slug>', views.view_movie, name='movie'),
     path('movies/<slug:movie_name_slug>/review/<str:username>', views.review, name='review'),
     path('movies/<slug:movie_name_slug>/create-review', views.create_review, name='create_review'),
+    path('comment/<int:comment_id>/delete', views.delete_comment, name='delete_comment'),
 
      path('ajax/search-movies/', views.ajax_search_movies, name='ajax_search_movies'),
      path('movies/<slug:movie_name_slug>/sorted-reviews/', views.ajax_sorted_reviews, name='ajax_sorted_reviews'),

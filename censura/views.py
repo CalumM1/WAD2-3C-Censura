@@ -295,6 +295,22 @@ def create_review(request, movie_name_slug=None):
     return render(request, 'censura/write_review.html', context)
 
 
+def delete_comment(request, comment_id):
+    print(comment_id)
+    comment_to_delete = Comment.objects.get(id=comment_id)
+    
+    review = get_object_or_404(Review, id=comment_to_delete.review_id)
+    movie = get_object_or_404(Movie, movie_id=review.movie_id)
+    
+    
+    if comment_to_delete:
+        comment_to_delete.delete()
+    else:
+        print("Comment not found")
+
+    return redirect(reverse('censura:review', args=[movie.slug, review.user.username]))
+
+
 def ajax_search_movies(request):
     query = request.GET.get('query', '')
     if query:

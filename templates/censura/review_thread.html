@@ -19,12 +19,17 @@
             {% for comment in comments %}
             <div class="review">
                 {% if comment.user == review.user %}
-                    <h4 style="color: blue">{{ comment.user.username }}</h4>
+                    <h5 style="color: blue">{{ comment.user.username }}</h5>
                 {% else %}
-                    <h4>{{ comment.user.username }}</h4>
+                    <h5>{{ comment.user.username }}</h5>
                 {% endif %}
 
                 <p>{{ comment.text }}</p>
+
+                {% if comment.user == user or user.is_superuser %}
+                    <a href="{% url 'censura:delete_comment' comment.id %}" class="btn btn-dark">Remove</a>
+                {% endif %}
+
                 <p class="review-date">{{ comment.created_at|date:"F d, Y" }}</p>
             </div>
             {% endfor %}
