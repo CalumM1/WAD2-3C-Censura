@@ -7,49 +7,55 @@ body {
 .navbar {
   list-style-type: none;
   margin: 0;
-  padding: 0;
+  padding: 10px 20px;
   overflow: hidden;
-  background-color: #333;
+  background-color: #444; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
+  border-radius: 8px; 
 }
 
 .navbar .brand {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  color: white;
-  font-size: 1.5em;
+  color: #f4f4f4; 
+  font-size: 1.8em; 
   font-weight: bold;
   font-family: 'Figtree', sans-serif;
+  margin-left: 10px; 
+  text-decoration: none; 
 }
 
 .navbar .nav-links {
   margin-left: auto;
   display: flex;
-  gap: 10px;
+  gap: 15px; 
 }
 
 .navbar li {
-  margin: 0 10px;
+  margin: 0;
 }
 
 .navbar li a {
   display: block;
-  color: white;
+  color: #f4f4f4; 
   text-align: center;
-  padding: 14px 16px;
+  padding: 10px 15px; 
   text-decoration: none;
+  border-radius: 5px; 
+  transition: background-color 0.3s ease, color 0.3s ease; 
 }
 
 .navbar li a:hover:not(.active) {
-  background-color: #111;
+  background-color: #555; 
+  color: #fff; 
 }
 
 .active {
-  background-color: #04AA6D;
+  background-color: #04AA6D; 
+  color: white;
+  border-radius: 5px; 
 }
 
 
@@ -94,8 +100,8 @@ body {
 .movie_poster {
   width:50%;
   box-sizing: border-box;
-  justify-content: center;        /* Center content vertically */
-    align-items: center;            /* Center content horizontally */
+  justify-content: center;       
+    align-items: center;           
     text-align: center; 
 }
 
