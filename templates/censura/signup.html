@@ -5,10 +5,15 @@
 {% endblock %}
 
 {% block body_block %}
-	<h2>Sign Up</h2>
-	<form method="post">
+
+
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 5%;">
+	<h1 class="mb-4">Sign Up</h1>
+	<form method="post" class="form-group col-lg-6 align-items-center">
 		{% csrf_token %}
 		{{ user_form.as_p }}
-		<button type="submit">Sign Up</button>
+		<button type="submit" class="btn btn-dark">Sign Up</button>
 	</form>
+</div>
 {% endblock %}

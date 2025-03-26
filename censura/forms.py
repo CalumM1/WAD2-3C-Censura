@@ -8,6 +8,19 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ('username', 'email', 'password')
+        
+        labels = {
+            'username': 'Your Username',
+            'email': 'Email Address',
+            'password': 'Create Password',
+        }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.label_suffix = ''
+        for myField in self.fields:
+            self.fields[myField].widget.attrs['class'] = 'form-control'
+
 
 class UserProfileForm(forms.ModelForm):
     likes = forms.ModelMultipleChoiceField(

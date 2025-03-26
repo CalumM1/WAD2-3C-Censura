@@ -5,13 +5,27 @@
 {% endblock %}
 
 {% block body_block %}
-	<h1>Login</h1>
-	<form id="login_form" method="post" action="{% url 'censura:login' %}">
+
+<div style="display: flex; flex-direction: column; align-items: center; margin-top: 5%;">
+	<h1 class="mb-4">Login</h1>
+	<form id="login_form" class="form-group col-lg-6 align-items-center" method="post" action="{% url 'censura:login' %}">
 		{% csrf_token %}
-		Username : <input type="text" name="username" value="" size="50" />
-		<br />
-		Password: <input type="password" name="password" value="" size="50" />
-		<br />
-		<input type="submit" value="submit" />
+	
+		<div class="mb-3">
+			<label for="username" class="form-label">Username</label>
+			<input type="text" id="username" name="username" class="form-control" placeholder="Enter your username"
+				required>
+		</div>
+	
+		<div class="mb-3">
+			<label for="password" class="form-label">Password</label>
+			<input type="password" id="password" name="password" class="form-control" placeholder="Enter your password"
+				required>
+		</div>
+	
+		<button type="submit" class="btn btn-dark">Login</button>
 	</form>
+</div>
+
+
 {% endblock %}
