@@ -8,10 +8,18 @@
 
     <h2>{{ user_profile.user.username }}'s Account</h2>
 
+
+    {% if user != user_profile.user %}
+        <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add Friend</button>
+        </form>
+    {% endif %}
+
     {% if user_profile.picture %}
         <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
     {% else %}
-        <img src="media/default_picture.jpg" alt="Profile Picture" style="width: 150px; height: auto;">
+        <img src="{{ MEDIA_DIR }}default_picture.jpg" alt="Profile Picture" style="width: 150px; height: auto;">
     {% endif %}
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">

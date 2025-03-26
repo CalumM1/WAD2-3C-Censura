@@ -23,6 +23,8 @@ urlpatterns = [
     path('user/<str:username>/my-favourites/', views.my_favourites, name='my_favourites'),
 
     path('user/<str:username>/my-reviews/', views.my_reviews, name='my_reviews'),
+    
+    path('user/<str:username>/add-friend/', views.add_friend, name='add_friend'),
 
     path('movies/', views.view_movies, name='movies'),
 
