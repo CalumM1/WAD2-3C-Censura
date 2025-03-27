@@ -340,7 +340,92 @@ body {
   color: #ffffff; 
 }
 
-
 img {
   width: 15%;
 }
+
+/* === Edit Profile Page === */
+
+#liked-movies-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.movie-tag {
+  background-color: #444;
+  color: #f5f5f5;
+  padding: 6px 12px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.movie-tag span {
+  margin-right: 8px;
+}
+
+.movie-tag button {
+  background: none;
+  border: none;
+  color: #f5f5f5;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.movie-tag button:hover {
+  color: #ff6b6b;
+}
+
+#movie-search {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 10px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 5px;
+}
+
+#movie-search::placeholder {
+  color: #aaa;
+}
+
+#search-results {
+  max-height: 250px;
+  overflow-y: auto;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #1c1c1c;
+  padding-left: 0;
+}
+
+#search-results li {
+  list-style-type: none;
+  padding: 10px;
+  cursor: pointer;
+  color: #e5e5e5;
+  border-bottom: 1px solid #333;
+}
+
+#search-results li:hover {
+  background-color: #2f2f2f;
+}
+
+/* Profile Picture Styling */
+img[alt="Profile Picture"] {
+  display: block;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 2px solid #333;
+  max-width: 150px;
+}
+
+
+
+
