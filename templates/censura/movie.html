@@ -83,7 +83,7 @@
                 <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>
                 <p>Rating: {{ review.rating }}/10</p>
                 <p>{{ review.text }}</p>
-                <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
+                <a href="{% url 'censura:review' movie.slug review.user.username %}">Comments</a>
                 <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
             </div>
             {% endfor %}
