@@ -27,6 +27,8 @@ urlpatterns = [
     path('user/<str:username>/add-friend/', views.add_friend, name='add_friend'),
     
     path('user/<str:username>/remove-friend/', views.remove_friend, name='remove_friend'),
+    
+    path('user/<str:username>/friends/', views.friends, name='friends'),
 
     path('movies/', views.view_movies, name='movies'),
 

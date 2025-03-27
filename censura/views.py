@@ -62,6 +62,16 @@ def my_account(request, username):
 
 
 @login_required
+def friends(request, username):
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    context = {
+        'friends': user_profile.friends.all(),
+        'username': username,
+    }
+    return render(request, 'censura/friends.html', context=context)
+
+
+@login_required
 def my_favourites(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     liked_movies = user_profile.likes.all().order_by('-release_date')
