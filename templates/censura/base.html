@@ -48,7 +48,7 @@
         </ul>
     </div>
 
-    <body>
+    <body data-is-authenticated="{% if user.is_authenticated %}true{% else %}false{% endif %}">
     <div style="padding: 2%">
         {% block body_block %}
         
