@@ -385,15 +385,22 @@ def create_review(request, movie_name_slug=None):
     return render(request, 'censura/write_review.html', context)
 
 
+def delete_review(request, review_id):
+    review_to_delete = Review.objects.get(id=review_id)
+    
+    if review_to_delete and review_to_delete.user.username == request.user.username:
+        review_to_delete.delete()
+        
+    return redirect(reverse('censura:my_reviews', args=[review_to_delete.user.username]))
+    
 def delete_comment(request, comment_id):
-    print(comment_id)
     comment_to_delete = Comment.objects.get(id=comment_id)
     
     review = get_object_or_404(Review, id=comment_to_delete.review_id)
     movie = get_object_or_404(Movie, movie_id=review.movie_id)
     
     
-    if comment_to_delete:
+    if comment_to_delete and comment_to_delete.user.username == request.user.username:
         comment_to_delete.delete()
     else:
         print("Comment not found")

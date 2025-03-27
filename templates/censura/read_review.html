@@ -24,6 +24,9 @@
         <p>Rating: {{ review.rating }}/10</p>
         <p>{{ review.text }}</p>
         <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
+        {% if review.user == user %}
+            <a class="btn btn-dark" href="{% url 'censura:delete_review' review.id %}"><i class="fa fa-trash"></i></a>
+        {% endif %}
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
     </div>
     {% endfor %}
