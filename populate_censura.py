@@ -68,7 +68,7 @@ if __name__ == '__main__':
     populate_genres()
     
     print('Populating Movies table...')
-    populate_movies(10)
+    populate_movies(20)
     
     print("Getting new movies...")
     get_new_movies()
