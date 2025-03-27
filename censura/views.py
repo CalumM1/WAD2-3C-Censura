@@ -53,15 +53,20 @@ def user_logout(request):
 def my_account(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     user_reviews = Review.objects.filter(
-        user=user_profile.user).order_by('-created_at')[:5]
+        user=user_profile.user).order_by('-created_at')[:3]
     liked_movies = user_profile.likes.all()
     favourites = liked_movies[:5]
+
+    least_favourites = Review.objects.filter(
+        user=user_profile.user, rating__lt=5).order_by('rating')[:5]
+    least_favourites = [review.movie for review in least_favourites]
 
     context = {
         'user_profile': user_profile,
         'user_reviews': user_reviews,
         'liked_movies': liked_movies,
         'favourites': favourites,
+        'least_favourites': least_favourites, 
     }
     return render(request, 'censura/account.html', context)
 
@@ -109,9 +114,21 @@ def my_favourites(request, username):
     return render(request, 'censura/movies.html', context=context_dict)
 
 
+def least_favourites(request, username):
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    least_favourites = Review.objects.filter(
+        user=user_profile.user).order_by('rating')[:5]
+    least_favourites = [review.movie for review in least_favourites]
+
+    context = {
+        'movies': least_favourites,
+        'username': username,
+    }
+    return render(request, 'censura/movies.html', context=context)
+
+
 @login_required
 def toggle_favourite(request, movie_name_slug):
-    print("Toggle favourite view reached for:", movie_name_slug)
     movie = get_object_or_404(Movie, slug=movie_name_slug)
     user_profile, created = UserProfile.objects.get_or_create(
         user=request.user)
@@ -125,14 +142,28 @@ def toggle_favourite(request, movie_name_slug):
 
     return JsonResponse({'success': True, 'is_favourite': is_favourite})
 
-
 @login_required
-def my_reviews(request, username):
-    if request.user.username != username:
-        return HttpResponseForbidden("You are not allowed to view this page.")
+def toggle_review_like(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    
+    if request.user in review.likes.all():
+        review.likes.remove(request.user)
+        liked = False
+    else:
+        review.likes.add(request.user)
+        liked = True
+        
+    return JsonResponse({
+        'success': True, 
+        'liked': liked,
+        'total_likes': review.likes.count()
+    })
 
+
+def my_reviews(request, username):
+    user = UserProfile.objects.get(user__username=username).user
     user_reviews = Review.objects.filter(
-        user=request.user).order_by('-created_at')
+        user=user).order_by('-created_at')
     paginator = Paginator(user_reviews, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -150,7 +181,7 @@ def my_reviews(request, username):
             'has_next': page_obj.has_next(),
         })
 
-    return render(request, 'censura/read_review.html', {'reviews': page_obj})
+    return render(request, 'censura/read_review.html', {'reviews': page_obj, 'review_user':user})
 
 
 def signup(request):
@@ -161,9 +192,6 @@ def signup(request):
             user = user_form.save(commit=False)
             user.set_password(user.password)  # hash password
             user.save()
-
-            # create a UserProfile linked to this User
-            UserProfile.objects.create(user=user)
 
             # Login the user
             login(request, user)
@@ -399,7 +427,7 @@ def ajax_sorted_reviews(request, movie_name_slug):
             "user": review.user.username,
             "rating": review.rating,
             "text": review.text,
-            "likes": review.likes,
+            "likes_count": review.likes.count(),
             "created_at": review.created_at.strftime("%B %d, %Y"),
         }
         for review in reviews

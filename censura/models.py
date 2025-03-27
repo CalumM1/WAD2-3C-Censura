@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-# CREATES USER PROFILE FOR SUPERUSER
+# CREATES USER PROFILE FOR NEW USERS
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
@@ -79,7 +79,7 @@ class Review(models.Model):
     )
     
     rating = models.IntegerField(default=0)
-    likes = models.IntegerField(default=0)
+    likes = models.ManyToManyField(User, related_name='review_likes', blank=True)
     text = models.TextField(default="No comment")
     created_at = models.DateTimeField(default=timezone.now)
 

@@ -8,88 +8,113 @@
 
 {% block body_block %}
     {% if movie %}
-        <h1><strong>{{ movie.name }}</strong></h1>
-        <div>
-            <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
-            {% if user.is_authenticated %}
-            <button class="favourite-btn" data-movie-slug="{{ movie.slug }}">
-                <span class="heart {% if movie in user.userprofile.likes.all %}filled{% else %}empty{% endif %}">
-                    {% if movie in user.userprofile.likes.all %}
+        <h1 class="text-center"><strong>{{ movie.name }}</strong></h1>
+        <div style="display: flex; align-items: center; justify-content: center;margin-bottom:100px;">
+            <div style="width: 40%; display:flex;align-items:center;justify-content: center">
+                <img style="width: 50%;" src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                {% if user.is_authenticated %}
+                <button class="btn btn-dark favourite-btn" data-movie-slug="{{ movie.slug }}">
+                    <span class="heart {% if movie in user.userprofile.likes.all %}filled{% else %}empty{% endif %}">
+                        {% if movie in user.userprofile.likes.all %}
                         ❤️
-                    {% else %}
+                        {% else %}
                         ♡
-                    {% endif %}
-                </span>
-            </button>
-            {% endif %}
-
-            <ul>
-                <li><strong>Release date:</strong> {{ movie.release_date }}</li>
-                <li><strong>Director:</strong> {{ movie.director }}</li>
-                <li><strong>Genres:</strong></li>
-                    <ul>
-                    {% for genre in movie.genre.all %}
-                        <li>{{ genre.name }}</li>
-                    {% endfor %}
-                    </ul>
-            </ul>
-        </div>
-    {% else %}
-        This movie is not in the database.
-    {% endif %}
-    <div>{{ movie.description }}</div>
-
-    <!-- Review section -->
-    <div id="user-review" class="review-section">
-        <h3>Your Reviews</h3>
-
-        {% if user.is_authenticated %}
-            <!-- Display existing user reviews -->
-            {% if user_has_reviewed %}
-            <div class="movie-reviews">
-                {% for review in user_reviews %}
-                <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-dark">Edit Review</a>
-                <div class="review">
-                    <h4> Reviewed by {{ review.user.username }}</h4>
-                    <p>Rating: {{ review.rating }}/10</p>
-                    <p>{{ review.text }}</p>
-                    <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
-                </div>
-                {% endfor %}
+                        {% endif %}
+                    </span>
+                </button>
+                {% endif %}
+            
+                <dl class="row">
+                    <dt class="col-sm-3 mb-1">Release Date</dt>
+                    <dd class="col-sm-9 mb-1 ml-2">{{ movie.release_date }}</dd>
+            
+                    <dt class="col-sm-3 mb-1">Director</dt>
+                    <dd class="col-sm-9 mb-1 ml-2">{{ movie.director }}</dd>
+            
+                    <dt class="col-sm-3 mb-1">Genres</dt>
+                    <dd class="col-sm-9 mb-1 ml-2">
+                        {% for genre in movie.genre.all %}
+                        <p class="mb-1">{{ genre.name }}</p>
+                        {% endfor %}
+                    </dd>
+                </dl>
             </div>
             {% else %}
-            <p>Have you watched this film and want to share your thoughts?</p>
-            <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-dark">Write a Review</a>
+            This movie is not in the database.
             {% endif %}
-        {% else %}
-            <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
-        {% endif %}
+            <div class="movie-description">
+                <p>{{ movie.description }}</p>
+            </div>
+
+        </div>
+        
+    <hr>
+    
+    <!-- Review section -->
+    <div id="user-review" class="review-section">
+        <h3 class="text-center">Your Reviews</h3>
+
+        <div class="movie-reviews">
+
+     
+
+            {% if user.is_authenticated %}
+                <!-- Display existing user reviews -->
+                {% if user_has_reviewed %}
+                    {% for review in user_reviews %}
+                    <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-dark">Edit Review</a>
+                    <div class="review">
+                        <h4> Reviewed by {{ review.user.username }}</h4>
+                        <p>Rating: {{ review.rating }}/10</p>
+                        <p>{{ review.text }}</p>
+                        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <p class="text-center">Have you watched this film and want to share your thoughts?</p>
+                    <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-dark">Write a Review</a>
+                {% endif %}
+
+            {% else %}
+                    <p class="text-center"><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
+            {% endif %}
+
+        </div>
     </div>
 
+    <hr>
     
-    <h3>All Reviews</h3>
-    <label for="sort">Sort by:</label>
-    <select id="sort" class="sort-dropdown">
-        <option value="created_at" selected>Newest</option>
-        <option value="likes">Most Liked</option>
-        <option value="rating">Highest Rated</option>
-    </select>
-    <div id="all-reviews-container" class="review-section" data-movie-slug="{{ movie.slug }}">
-        <!-- Display top reviews -->
-        {% if all_reviews %}
+    <h3 class="text-center">All Reviews</h3>
+    {% if all_reviews %}
+        <label for="sort" class="text-center d-block">Sort by:</label>
+        <select id="sort" class="sort-dropdown mx-auto d-block">
+            <option value="created_at" selected>Newest</option>
+            <option value="likes">Most Liked</option>
+            <option value="rating">Highest Rated</option>
+        </select>
+        <div id="all-reviews-container" class="review-section" data-movie-slug="{{ movie.slug }}">
+            <!-- Display top reviews -->
+        
         <div id="all-reviews" class="movie-reviews">
             {% for review in all_reviews %}
             <div class="review" data-review-url="{% url 'censura:review' movie.slug review.user.username %}">
                 <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>
                 <p>Rating: {{ review.rating }}/10</p>
                 <p>{{ review.text }}</p>
-                <a href="{% url 'censura:review' movie.slug review.user.username %}">Comments</a>
+                {% if user.is_authenticated %}
+                <button class="like-review-btn" data-review-id="{{ review.id }}">
+                    <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
+                        👍 <span class="like-count">{{ review.likes.count }}</span>
+                    </span>
+                </button>
+                {% endif %}
+                <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
                 <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
             </div>
             {% endfor %}
-        </div>
-        {% else %}
-        <p>No reviews yet. Be the first to review!</p>
-        {% endif %}
-    </div>
+        </div>       
+    {% else %}
+        <p class="text-center">No reviews yet. Be the first to review!</p>
+    {% endif %}
+         </div>
 {% endblock %}

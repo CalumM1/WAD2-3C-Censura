@@ -42,21 +42,57 @@
     </div>
 
 
-    <div>
-        <h2>
-            {{ user_profile.user.username }}'s <a href="{% url 'censura:my_favourites' user_profile.user.username %}">favourites</a>
-        </h2>
-        <ul>
-            {% for movie in favourites %}
-                <li class="movie_element">
-                    <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
-                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
-                        <span>{{ movie.name }}</span>
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
+    <div class="account-page-container">
+        <!-- Left Section -->
+        <div class="account-left">
+            <div>
+                <h2>
+                    {{ user_profile.user.username }}'s <a href="{% url 'censura:my_favourites' user_profile.user.username %}">favourites</a>
+                </h2>
+                <ul class="small-movie-list">
+                    {% for movie in favourites %}
+                        <li class="small-movie-element">
+                            <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
+                                <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                                <span>{{ movie.name }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+    
+            <div>
+                <h2>
+                    {{ user_profile.user.username }}'s <a href="{% url 'censura:least_favourites' user_profile.user.username %}">least favourites</a>
+                </h2>
+                <ul class="small-movie-list">
+                    {% for movie in least_favourites %}
+                        <li class="small-movie-element">
+                            <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
+                                <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                                <span>{{ movie.name }}</span>
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    
+        <!-- Right Section -->
+        <div class="account-right">
+            <h2>{{ user_profile.user.username }}'s Recent Reviews</h2>
+            <ul class="movie-reviews">
+                {% for review in user_reviews %}
+                    <li class="review">
+                        <h4>Reviewed: <a href="{% url 'censura:movie' review.movie.slug %}">{{ review.movie.name }}</a></h4>
+                        <p>Rating: {{ review.rating }}/10</p>
+                        <p>{{ review.text|truncatewords:20 }}</p> <!-- Truncate long reviews -->
+                        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
+    
 {% endblock %}
 

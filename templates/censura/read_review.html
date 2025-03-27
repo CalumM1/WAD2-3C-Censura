@@ -1,26 +1,32 @@
 {% extends 'censura/base.html' %}
 {% load static %} 
 {% block title_block %}
-    {{ user.username }}'s Reviews
+    {{ review_user.username }}'s Reviews
 {% endblock %}
 
 {% block body_block %}
 
-<h2>{{ user.username }}'s Reviews</h2>
+<h2>{{ review_user.username }}'s Reviews</h2>
 
 <div id="infinite-scroll-container" class="movie-reviews">
     {% for review in reviews %}
-        <div class="review scroll-item">
+    <div class="review scroll-item">
+        <div style="display: flex; justify-content: space-between;">
             <h4>{{ review.movie.name }}</h4>
-            <p>Rating: {{ review.rating }}/10</p>
-            <p>{{ review.text }}</p>
-            <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
-            <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+            {% if user.is_authenticated %}
+            <button class="like-review-btn" data-review-id="{{ review.id }}">
+                <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
+                    👍 <span class="like-count">{{ review.likes.count }}</span>
+                </span>
+            </button>
+            {% endif %}
         </div>
-    {% empty %}
-        <p>No reviews yet.</p>
+        <p>Rating: {{ review.rating }}/10</p>
+        <p>{{ review.text }}</p>
+        <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
+        <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+    </div>
     {% endfor %}
-</div>
 <a href="{% url 'censura:my_account' user.username %}">Back</a>
 
 
