@@ -6,54 +6,47 @@
 {% endblock %}
 
 {% block body_block %}
-    <h2>Edit Account</h2>
+<h2>Edit Account</h2>
 
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        {{ profile_form.picture.label_tag }}
+        {{ profile_form.picture }}
 
-        <div>
-            {{ profile_form.picture.label_tag }}
-            {{ profile_form.picture }}
-        
-            {% if user.userprofile.picture.name != 'profile_images/default_picture.jpg' %}
-            <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px;">
+        {% if user.userprofile.picture.name != 'profile_images/default_picture.jpg' %}
+            <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture">
             <div>
                 {{ profile_form.remove_picture }} {{ profile_form.remove_picture.label }}
             </div>
         {% endif %}
-            
-        </div>
-
-        <button type="submit" class="btn btn-dark mt-3">Save changes</button>
-    </form>
-
-    <hr>
-
-
-
-    <h3>Your Liked Movies</h3>
-    <div id="liked-movies-container" style="display: flex; flex-wrap: wrap; gap: 10px;">
-        {% for movie in user.userprofile.likes.all %}
-            <div class="movie-tag" data-movie-slug="{{ movie.slug }}" style="background-color: #eee; padding: 5px 10px; border-radius: 20px; display: flex; align-items: center;">
-                <span>{{ movie.name }}</span>
-                <button onclick="toggleLike('{{ movie.slug }}', '{{ movie.name }}')" style="background: none; border: none; margin-left: 8px; font-weight: bold; cursor: pointer;">&times;</button>
-            </div>
-        {% empty %}
-            <p>No liked movies yet.</p>
-        {% endfor %}
     </div>
 
-    <hr>
-    
-    <h3>Search & Add to Likes</h3>
-    <input type="text" id="movie-search" class="form-control" placeholder="Search for a movie..." onkeyup="searchMovies()">
-    <ul id="search-results" class="list-group mt-2"></ul>
+    <button type="submit" class="btn btn-dark mt-3">Save changes</button>
+</form>
 
+<hr>
 
+<h3>Your Liked Movies</h3>
+<div id="liked-movies-container">
+    {% for movie in user.userprofile.likes.all %}
+        <div class="movie-tag" data-movie-slug="{{ movie.slug }}">
+            <span>{{ movie.name }}</span>
+            <button onclick="toggleLike('{{ movie.slug }}', '{{ movie.name }}')">&times;</button>
+        </div>
+    {% empty %}
+        <p>No liked movies yet.</p>
+    {% endfor %}
+</div>
 
+<hr>
 
-    <script>
-        window.searchMoviesUrl = "{% url 'censura:ajax_search_movies' %}";
-    </script>
-    <script src="{% static 'js/edit_profile.js' %}"></script>
+<h3>Search & Add to Likes</h3>
+<input type="text" id="movie-search" class="form-control" placeholder="Search for a movie...">
+<ul id="search-results" class="list-group mt-2"></ul>
+
+<script>
+    window.searchMoviesUrl = "{% url 'censura:ajax_search_movies' %}";
+</script>
+<script src="{% static 'js/edit_profile.js' %}"></script>
 {% endblock %}
