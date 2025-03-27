@@ -217,7 +217,10 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px; 
+  gap: 20px; /* Space between left and right sections */
+  max-width: 1200px; /* Adjusted width */
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .account-left {
@@ -258,12 +261,99 @@ body {
   color: #ffffff;
 }
 
+.friends-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #333;
+  color: #ffffff;
+  text-decoration: none;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.account-links a.friends-button:hover {
+  background-color: #555;
+  color: #ffffff;
+}
+
+.account-header {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Space between profile picture and buttons */
+  margin-bottom: 20px;
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+  max-width: 900px; /* Adjusted width */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.profile-picture-container {
+  flex: 0 0 auto;
+  text-align: center;
+}
+
+.profile-picture {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #333;
+}
+
+.account-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Space between buttons */
+}
+
+.account-buttons .btn {
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.account-buttons .btn-secondary {
+  background-color: #333;
+  color: #fff;
+}
+
+.account-buttons .btn-secondary:hover {
+  background-color: #555;
+  color: #fff;
+}
+
+.account-buttons .btn-primary {
+  background-color: #038a5a;
+  color: #fff;
+}
+
+.account-buttons .btn-primary:hover {
+  background-color: #026a45;
+  color: #fff;
+}
+
+.account-buttons .btn-danger {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.account-buttons .btn-danger:hover {
+  background-color: #c9302c;
+  color: #fff;
+}
+
 img.profile-picture {
-  width: 150px; /* Set the standard size */
-  height: 150px; /* Ensure the height matches the width for a perfect circle */
-  border-radius: 50%; /* Make the image circular */
-  object-fit: cover; /* Ensure the image scales properly within the circle */
-  border: 2px solid #333; /* Optional: Add a border for better visibility */
+  width: 150px; 
+  height: 150px; 
+  border-radius: 50%; 
+  object-fit: cover; 
+  border: 2px solid #333; 
 }
 
 .movie-reviews {
