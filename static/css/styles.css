@@ -231,6 +231,41 @@ body {
   max-width: 45%; 
 }
 
+.account-links-container {
+  display: flex;
+  align-items: flex-start; 
+  gap: 20px; 
+}
+
+.account-links {
+  display: flex;
+  flex-direction: column; 
+  gap: 10px; 
+}
+
+.account-links a {
+  text-decoration: none;
+  color: #ffffff; 
+  background-color: #333; 
+  padding: 10px 15px;
+  border-radius: 5px;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.account-links a:hover {
+  background-color: #555;
+  color: #ffffff;
+}
+
+img.profile-picture {
+  width: 150px; /* Set the standard size */
+  height: 150px; /* Ensure the height matches the width for a perfect circle */
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover; /* Ensure the image scales properly within the circle */
+  border: 2px solid #333; /* Optional: Add a border for better visibility */
+}
+
 .movie-reviews {
   display: flex;
   flex-direction: column;
@@ -416,16 +451,3 @@ img {
 #search-results li:hover {
   background-color: #2f2f2f;
 }
-
-/* Profile Picture Styling */
-img[alt="Profile Picture"] {
-  display: block;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 2px solid #333;
-  max-width: 150px;
-}
-
-
-
-

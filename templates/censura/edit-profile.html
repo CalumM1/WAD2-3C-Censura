@@ -15,7 +15,7 @@
         {{ profile_form.picture }}
 
         {% if user.userprofile.picture.name != 'profile_images/default_picture.jpg' %}
-            <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture">
+            <img class="profile-picture" src="{{ user.userprofile.picture.url }}" alt="Profile Picture">
             <div>
                 {{ profile_form.remove_picture }} {{ profile_form.remove_picture.label }}
             </div>
