@@ -48,7 +48,7 @@
             {% if user_has_reviewed %}
             <div class="movie-reviews">
                 {% for review in user_reviews %}
-                <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-primary">Edit Review</a>
+                <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-dark">Edit Review</a>
                 <div class="review">
                     <h4> Reviewed by {{ review.user.username }}</h4>
                     <p>Rating: {{ review.rating }}/10</p>
@@ -59,7 +59,7 @@
             </div>
             {% else %}
             <p>Have you watched this film and want to share your thoughts?</p>
-            <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-primary">Write a Review</a>
+            <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-dark">Write a Review</a>
             {% endif %}
         {% else %}
             <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>

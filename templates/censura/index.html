@@ -8,46 +8,49 @@
         {% else %}
         <div class="welcome">
             <h2>New Users</h2>
-            <a href="{% url 'censura:signup' %}">Sign up</a> for a new account.
+            <a class="btn btn-dark" role="button" href="{% url 'censura:signup' %}">Sign up</a> for a new account.
         </div>
         
         
         <div class="welcome">
             <h2>Existing Users</h2>
-            <a href="{% url 'censura:login' %}">Login</a> to your account.
+            <a class="btn btn-dark" role="button" href="{% url 'censura:login' %}">Login</a> to your account.
         </div>
         {% endif %}
 		
 	</div>
 
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <div>
+            <h2>Recent Releases</h2>
+            <ul class="movie_list">
 
-    <div>
-        <h2>Recent Releases</h2>
-        <ul class="movie_list">
-            
-            {% for movie in movies_release_order %}
+                {% for movie in movies_release_order %}
                 <li class="movie_element">
-                    <a class="movie" href="{% url 'censura:movie' movie.slug %}">
+                    <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
                         <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
                         <span>{{ movie.name }}</span>
                     </a>
                 </li>
-            {% endfor %}  
-        </ul>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div>
+            <h2>Popular Movies</h2>
+            <ul class="movie_list">
+
+                {% for movie in movies_by_popularity %}
+                <li class="movie_element">
+                    <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
+                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                        <span>{{ movie.name }}</span>
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
-
-    <div>
-        <h2>Popular Movies</h2>
-        <ul class="movie_list">
-            
-            {% for movie in movies_by_popularity %}
-                <li class="movie_element">
-                    <a class="movie" href="{% url 'censura:movie' movie.slug %}">
-                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
-                        <span>{{ movie.name }}</span>
-                    </a>
-                </li>
-            {% endfor %}  
-        </ul>
+    
 
 {% endblock %}
