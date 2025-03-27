@@ -48,7 +48,7 @@
             {% if user_has_reviewed %}
             <div class="movie-reviews">
                 {% for review in user_reviews %}
-                <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-dark">Edit Review</a>
+                <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}#{% endif %}" class="btn btn-primary">Edit Review</a>
                 <div class="review">
                     <h4> Reviewed by {{ review.user.username }}</h4>
                     <p>Rating: {{ review.rating }}/10</p>
@@ -59,7 +59,7 @@
             </div>
             {% else %}
             <p>Have you watched this film and want to share your thoughts?</p>
-            <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-dark">Write a Review</a>
+            <a href="{% if movie.slug %}{% url 'censura:create_review' movie.slug %}{% else %}# No URL available{% endif %}" class="btn btn-primary">Write a Review</a>
             {% endif %}
         {% else %}
             <p><a href="{% url 'censura:login' %}">Login</a> to write a review.</p>
@@ -83,6 +83,13 @@
                 <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>
                 <p>Rating: {{ review.rating }}/10</p>
                 <p>{{ review.text }}</p>
+                {% if user.is_authenticated %}
+                <button class="like-review-btn" data-review-id="{{ review.id }}">
+                    <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
+                        👍 <span class="like-count">{{ review.likes.count }}</span>
+                    </span>
+                </button>
+                {% endif %}
                 <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
                 <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
             </div>

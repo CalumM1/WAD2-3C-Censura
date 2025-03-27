@@ -10,7 +10,16 @@
 
 <div style="display: flex; justify-content: space-between; align-items: flex-start;">
     <div class="review">
-        <h4>Reviewed by {{ review.user.username }}</h4>
+        <div style="display: flex; justify-content: space-between; align-items: center; align-items: flex-start;">
+            <h2>{{ review.user.username }}'s Review</h2>
+            {% if user.is_authenticated %}
+            <button class="like-review-btn" data-review-id="{{ review.id }}">
+                <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
+                    👍 <span class="like-count">{{ review.likes.count }}</span>
+                </span>
+            </button>
+            {% endif %}
+        </div>
         <p>Rating: {{ review.rating }}/10</p>
         <p>{{ review.text }}</p>
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
