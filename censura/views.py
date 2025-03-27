@@ -157,6 +157,36 @@ def signup(request):
 
 
 @login_required
+def add_friend(request, username):
+    if request.method == 'POST':
+        user_to_add = get_object_or_404(User, username=username)
+        user_profile = request.user.userprofile
+        friend_profile = user_to_add.userprofile
+        
+        if friend_profile not in user_profile.friends.all():
+            user_profile.friends.add(friend_profile)
+        
+        return redirect(reverse(("censura:my_account"), args=[username]))
+        
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+
+@login_required
+def remove_friend(request, username):
+    if request.method == 'POST':
+        user_to_remove = get_object_or_404(User, username=username)
+        user_profile = request.user.userprofile
+        friend_profile = user_to_remove.userprofile
+
+        if friend_profile in user_profile.friends.all():
+            user_profile.friends.remove(friend_profile)
+
+        return redirect(reverse("censura:my_account", args=[username]))
+
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+
+@login_required
 def edit_profile(request, username):
     user = request.user
     if user.username != username:  # prevent others from editing
@@ -288,21 +318,6 @@ def create_review(request, movie_name_slug=None):
         'edit_mode': review is not None
     }
     return render(request, 'censura/write_review.html', context)
-
-
-@login_required
-def add_friend(request, username):
-    if request.method == 'POST':
-        user_to_add = get_object_or_404(User, username=username)
-        user_profile = request.user.userprofile
-        friend_profile = user_to_add.userprofile
-        
-        if friend_profile not in user_profile.friends.all():
-            user_profile.friends.add(friend_profile)
-        
-        return redirect(reverse(("censura:my_account"), args=[request.user.username]))
-        
-    return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 
 def ajax_search_movies(request):
