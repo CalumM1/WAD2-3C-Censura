@@ -26,6 +26,7 @@
         <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
     </div>
+    {% endfor %}
 <a href="{% url 'censura:my_account' user.username %}">Back</a>
 
 
