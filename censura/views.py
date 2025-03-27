@@ -55,11 +55,13 @@ def my_account(request, username):
     user_reviews = Review.objects.filter(
         user=user_profile.user).order_by('-created_at')[:5]
     liked_movies = user_profile.likes.all()
+    favourites = liked_movies[:5]
 
     context = {
         'user_profile': user_profile,
         'user_reviews': user_reviews,
         'liked_movies': liked_movies,
+        'favourites': favourites,
     }
     return render(request, 'censura/account.html', context)
 
@@ -67,9 +69,10 @@ def my_account(request, username):
 @login_required
 def friends(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
+    friends = user_profile.friends.all()
     context = {
-        'friends': user_profile.friends.all(),
-        'num_friends': len(user_profile.friends.all()),
+        'friends': friends,
+        'num_friends': len(friends),
         'username': username,
     }
     return render(request, 'censura/friends.html', context=context)

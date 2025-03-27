@@ -43,5 +43,22 @@
     {% endif %}
     </div>
 
+
+    <div>
+        <h2>
+            {{ user_profile.user.username }}'s <a href="{% url 'censura:my_favourites' user_profile.user.username %}">favourites</a>
+        </h2>
+        <ul>
+            {% for movie in favourites %}
+                <li class="movie_element">
+                    <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
+                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                        <span>{{ movie.name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
 {% endblock %}
 
