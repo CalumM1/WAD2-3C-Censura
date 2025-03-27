@@ -13,7 +13,9 @@
     {% for review in reviews %}
     <div class="review scroll-item">
         <div style="display: flex; justify-content: space-between;">
-            <h4>{{ review.movie.name }}</h4>
+            <h4>
+                <a href="{% url 'censura:movie' review.movie.slug %}">{{ review.movie.name }}</a>
+            </h4>
             {% if user.is_authenticated %}
             <button class="like-review-btn" data-review-id="{{ review.id }}">
                 <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
