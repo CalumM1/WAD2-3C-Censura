@@ -88,6 +88,27 @@ body {
   text-decoration: none;
 }
 
+.movie-description {
+  width: 40%; 
+  text-align: center; 
+  font-size:1.5rem;
+}
+
+.movie_element li {
+  flex: 1 1 calc(20% - 20px);
+  max-width: 200px;
+  text-align: center;
+}
+
+
+.movie_poster {
+  width:50%;
+  box-sizing: border-box;
+  justify-content: center;       
+    align-items: center;           
+    text-align: center; 
+}
+
 .small-movie-list {
   display: flex;
   flex-wrap: wrap;
@@ -161,6 +182,7 @@ body {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  margin-bottom: 50px;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
