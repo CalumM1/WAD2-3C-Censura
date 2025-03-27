@@ -58,7 +58,7 @@ def my_account(request, username):
     favourites = liked_movies[:5]
 
     least_favourites = Review.objects.filter(
-        user=user_profile.user).order_by('rating')[:5]
+        user=user_profile.user, rating__lt=5).order_by('rating')[:5]
     least_favourites = [review.movie for review in least_favourites]
 
     context = {
