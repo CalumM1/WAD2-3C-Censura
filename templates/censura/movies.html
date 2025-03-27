@@ -32,7 +32,7 @@ Movies
 					<!-- Release Year Filter -->
 					<div class="mb-3">
 						<label class="form-label">Release Year</label>
-						<input type="number" name="year" class="form-control" placeholder="e.g. 2020"
+						<input type="number" name="year" min="1900" max="2099" step="1" class="form-control" placeholder="e.g. 2025"
 							value="{{ request.GET.year }}">
 					</div>
 					<button type="submit" class="btn btn-dark w-100">Apply Filters</button>
@@ -46,40 +46,44 @@ Movies
 
 		<!-- Movies Grid -->
 		<div class="col-lg-9 col-md-8">
-			<div class="row">
-				{% for movie in movies %}
-				<div class="col-lg-3 col-md-4 col-sm-6">
-					<a style="text-decoration: none; color: inherit;" href="{% url 'censura:movie' movie.slug %}">
-						<div class="card movie-card text-center">
-							<img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.slug }}">
-							<div class="overlay">
-								<p class="overlay-text">{{ movie.name }}</p>
+			{% if movies %}
+				<div class="row">
+					{% for movie in movies %}
+					<div class="col-lg-3 col-md-4 col-sm-6">
+						<a style="text-decoration: none; color: inherit;" href="{% url 'censura:movie' movie.slug %}">
+							<div class="card movie-card text-center">
+								<img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.slug }}">
+								<div class="overlay">
+									<p class="overlay-text">{{ movie.name }}</p>
+								</div>
 							</div>
-						</div>
-					</a>
+						</a>
+					</div>
+					{% endfor %}
 				</div>
-				{% endfor %}
-			</div>
 
-			<div class="pagination">
-				{% if movies.has_previous %}
-				<a class="btn btn-dark"
-					href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">First</a>
-			
-				<a class="btn btn-dark"
-					href="?page={{ movies.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Prev</a>
-				{% endif %}
-			
-				<span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
-			
-				{% if movies.has_next %}
-				<a class="btn btn-dark"
-					href="?page={{ movies.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Next</a>
-			
-				<a class="btn btn-dark"
-					href="?page={{ movies.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Last</a>
-				{% endif %}
-			</div>
+				<div class="pagination">
+					{% if movies.has_previous %}
+					<a class="btn btn-dark"
+						href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">First</a>
+				
+					<a class="btn btn-dark"
+						href="?page={{ movies.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Prev</a>
+					{% endif %}
+				
+					<span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+				
+					{% if movies.has_next %}
+					<a class="btn btn-dark"
+						href="?page={{ movies.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Next</a>
+				
+					<a class="btn btn-dark"
+						href="?page={{ movies.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Last</a>
+					{% endif %}
+				</div>
+			{% else %}
+				<p>NO MOVIES FOUND</p>
+			{% endif %}
 
 
 		</div>
