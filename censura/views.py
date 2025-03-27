@@ -427,7 +427,7 @@ def ajax_sorted_reviews(request, movie_name_slug):
             "user": review.user.username,
             "rating": review.rating,
             "text": review.text,
-            "likes": review.likes,
+            "likes_count": review.likes.count(),
             "created_at": review.created_at.strftime("%B %d, %Y"),
         }
         for review in reviews
