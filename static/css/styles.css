@@ -90,6 +90,12 @@ body {
   text-decoration: none;
 }
 
+.movie-description {
+  width: 40%; 
+  text-align: center; 
+  font-size:1.5rem;
+}
+
 .movie_element li {
   flex: 1 1 calc(20% - 20px);
   max-width: 200px;
@@ -145,6 +151,7 @@ body {
   flex-direction: column;
   gap: 20px;
   margin-top: 20px;
+  margin-bottom: 50px;
   max-width: 800px;
   margin-left: auto;
   margin-right: auto;
