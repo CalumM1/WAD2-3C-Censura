@@ -1,12 +1,12 @@
 {% extends 'censura/base.html' %}
 {% load static %} 
 {% block title_block %}
-    {{ user.username }}'s Reviews
+    {{ review_user.username }}'s Reviews
 {% endblock %}
 
 {% block body_block %}
 
-<h2>{{ user.username }}'s Reviews</h2>
+<h2>{{ review_user.username }}'s Reviews</h2>
 
 <div id="infinite-scroll-container" class="movie-reviews">
     {% for review in reviews %}
@@ -26,6 +26,7 @@
         <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
     </div>
+    {% endfor %}
 <a href="{% url 'censura:my_account' user.username %}">Back</a>
 
 

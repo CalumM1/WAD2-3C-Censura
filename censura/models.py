@@ -20,7 +20,7 @@ class UserProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-# CREATES USER PROFILE FOR SUPERUSER
+# CREATES USER PROFILE FOR NEW USERS
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
