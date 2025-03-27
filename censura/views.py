@@ -27,6 +27,8 @@ def index(request):
 
 
 def user_login(request):
+    error_message = None
+
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
@@ -38,8 +40,9 @@ def user_login(request):
                 login(request, user)
                 return redirect(reverse('censura:my_account', args=[request.user.username]))
         else:
-            return HttpResponse('invalid login details')
-    return render(request, 'censura/login.html')
+            error_message = "Invalid Login Details"
+
+    return render(request, 'censura/login.html', {'error_message': error_message})
 
 
 def user_logout(request):
@@ -93,20 +96,22 @@ def my_favourites(request, username):
     #         ],
     #         'has_next': page_obj.has_next(),
     #     })
+
+    # return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
+
     paginator = Paginator(liked_movies, 24)
     page = request.GET.get('page')
     movies = paginator.get_page(page)
     context_dict = {"movies": movies, "favourites": True}
     return render(request, 'censura/movies.html', context=context_dict)
 
-    
-    #return render(request, 'censura/favourites.html', {'liked_movies': page_obj})
 
 @login_required
 def toggle_favourite(request, movie_name_slug):
     print("Toggle favourite view reached for:", movie_name_slug)
     movie = get_object_or_404(Movie, slug=movie_name_slug)
-    user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+    user_profile, created = UserProfile.objects.get_or_create(
+        user=request.user)
 
     if movie in user_profile.likes.all():
         user_profile.likes.remove(movie)
@@ -203,7 +208,8 @@ def edit_profile(request, username):
         return HttpResponseForbidden("You are not allowed to edit this profile.")
 
     if request.method == 'POST':
-        profile_form = UserProfileForm(request.POST, request.FILES, instance=user.userprofile)
+        profile_form = UserProfileForm(
+            request.POST, request.FILES, instance=user.userprofile)
 
         if profile_form.is_valid():
             profile_form.save()
@@ -255,21 +261,21 @@ def view_movie(request, movie_name_slug):
 
 
 def review(request, movie_name_slug, username):
-    
+
     movie = get_object_or_404(Movie, slug=movie_name_slug)
     user = UserProfile.objects.get(user__username=username).user
     review = get_object_or_404(Review, movie=movie, user=user)
     comments = Comment.objects.filter(review=review)
-    
+
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        
+
         if form.is_valid():
             new_comment = form.save(commit=False)
             new_comment.user = request.user
             new_comment.review = review
             new_comment.save()
-            
+
             return redirect(reverse('censura:review', args=[movie.slug, review.user.username]))
     else:
         form = CommentForm()
@@ -328,6 +334,22 @@ def create_review(request, movie_name_slug=None):
         'edit_mode': review is not None
     }
     return render(request, 'censura/write_review.html', context)
+
+
+def delete_comment(request, comment_id):
+    print(comment_id)
+    comment_to_delete = Comment.objects.get(id=comment_id)
+    
+    review = get_object_or_404(Review, id=comment_to_delete.review_id)
+    movie = get_object_or_404(Movie, movie_id=review.movie_id)
+    
+    
+    if comment_to_delete:
+        comment_to_delete.delete()
+    else:
+        print("Comment not found")
+
+    return redirect(reverse('censura:review', args=[movie.slug, review.user.username]))
 
 
 def ajax_search_movies(request):

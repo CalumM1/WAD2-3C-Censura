@@ -9,13 +9,13 @@ body {
   margin: 0;
   padding: 10px 20px;
   overflow: hidden;
-  background-color: #444; 
+  background-color:  #212529; 
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); 
-  border-radius: 8px; 
+  /* border-radius: 8px;  */
 }
 
 .navbar .brand {
@@ -48,7 +48,7 @@ body {
 }
 
 .navbar li a:hover:not(.active) {
-  background-color: #555; 
+  background-color:#555; 
   color: #fff; 
 }
 
@@ -160,7 +160,7 @@ body {
   word-wrap: break-word ;
 }
 
-.review h4 {
+.review h4, .review h5{
   margin-top: 0;
   color: #333;
   text-align: right;

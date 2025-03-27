@@ -39,15 +39,15 @@
 
 	<div class="pagination">
 		{% if movies.has_previous %}
-		<a href="?page=1">First</a>
-		<a href="?page={{ movies.previous_page_number }}">Prev</a>
+		<a class="btn btn-dark" href="?page=1">First</a>
+		<a class="btn btn-dark" href="?page={{ movies.previous_page_number }}">Prev</a>
 		{% endif %}
 	
 		<span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
 	
 		{% if movies.has_next %}
-		<a href="?page={{ movies.next_page_number }}">Next</a>
-		<a href="?page={{ movies.paginator.num_pages }}">Last</a>
+		<a class="btn btn-dark" href="?page={{ movies.next_page_number }}">Next</a>
+		<a class="btn btn-dark" href="?page={{ movies.paginator.num_pages }}">Last</a>
 		{% endif %}
 	</div>
 
