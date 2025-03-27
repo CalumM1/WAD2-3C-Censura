@@ -27,6 +27,8 @@ urlpatterns = [
     path('reviews/<int:review_id>/toggle-like/', views.toggle_review_like, name='toggle_review_like'),
     
     path('user/<str:username>/add-friend/', views.add_friend, name='add_friend'),
+    
+    path('user/<str:username>/remove-friend/', views.remove_friend, name='remove_friend'),
 
     path('movies/', views.view_movies, name='movies'),
 
@@ -37,6 +39,7 @@ urlpatterns = [
     path('movies/<slug:movie_name_slug>/review/<str:username>', views.review, name='review'),
     
     path('movies/<slug:movie_name_slug>/create-review', views.create_review, name='create_review'),
+    path('comment/<int:comment_id>/delete', views.delete_comment, name='delete_comment'),
 
     path('ajax/search-movies/', views.ajax_search_movies, name='ajax_search_movies'),
     

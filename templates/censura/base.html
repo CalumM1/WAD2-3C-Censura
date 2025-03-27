@@ -20,7 +20,7 @@
     </head>
 
     <div>
-        <!-- <ul class="navbar">
+        <ul class="navbar">
             <li class="brand"><a href="{% url 'censura:index' %}">Censura</a></li>
 
             <div class="nav-links">
@@ -45,37 +45,7 @@
 
             </div>
 
-        </ul> -->
-
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand brand" href="{% url 'censura:index' %}">Censura</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-                <div class="navbar-nav ml-auto">
-
-                    {% if user.is_authenticated %}
-                    <a class="nav-item nav-link" href="{% url 'censura:my_account' user.username %}">
-                            My Account</a>
-                    
-                    <a class="nav-item nav-link" href="{% url 'censura:edit_profile' user.username %}">
-                            Edit Profile</a>
-                    
-                    <a class="nav-item nav-link" href="{% url 'censura:logout' %}">Log out</a>
-                    {% else %}
-                    <a class="nav-item nav-link" href="{% url 'censura:login' %}">Login</a>
-                    <a class="nav-item nav-link" href="{% url 'censura:signup' %}">Sign Up</a>
-                    
-                    {% endif %}
-
-                    <a class="nav-item nav-link" href="{% url 'censura:movies' %}">Movies</a>
-                    <a class="nav-item nav-link" href="{% url 'censura:about' %}">About</a>
-                    <a class="nav-item nav-link" href="{% url 'censura:index' %}">Home</a>
-                </div>
-            </div>
-        </nav>
+        </ul>
     </div>
 
     <body>

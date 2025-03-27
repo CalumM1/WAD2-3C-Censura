@@ -10,14 +10,22 @@
 
 
     {% if user != user_profile.user %}
+    {% if user_profile in user.userprofile.friends.all %}
+        <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Remove Friend</button>
+        </form>
+    {% else %}
         <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
             {% csrf_token %}
             <button type="submit" class="btn btn-primary">Add Friend</button>
         </form>
     {% endif %}
+{% endif %}
 
-    <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
-  
+    <div>
+        <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+    </div>    
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
     <ul id="search-results"></ul>
