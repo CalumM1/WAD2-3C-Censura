@@ -9,6 +9,12 @@ class UserProfile(models.Model):
     picture = models.ImageField(upload_to='profile_images/', blank=True, default='profile_images/default_picture.jpg')
     friends = models.ManyToManyField('self', symmetrical=True, related_name='friends', blank=True)
     
+    # Ensure the default picture is set if the user clears their picture
+    def save(self, *args, **kwargs):
+        if not self.picture:
+            self.picture = 'profile_images/default_picture.jpg'
+        super(UserProfile, self).save(*args, **kwargs)
+    
     def __str__(self):
         return self.user.username
 

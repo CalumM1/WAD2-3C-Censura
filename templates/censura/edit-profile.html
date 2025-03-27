@@ -8,7 +8,27 @@
     <h2>Edit Account</h2>
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
-        {{ profile_form.as_p }}
+
+        <div>
+            {{ profile_form.likes.label_tag }}
+            {{ profile_form.likes }}
+        </div>
+
+        <div>
+            <label for="id_picture">Profile Picture:</label>
+            {% if user.userprofile.picture and user.userprofile.picture.name %}
+                {% if user.userprofile.picture.name != 'profile_images/default_picture.jpg' %}
+                    <p>Current profile picture:</p>
+                    <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+                {% else %}
+                    <p>No profile picture selected.</p>
+                {% endif %}
+            {% else %}
+                <p>No profile picture selected.</p>
+            {% endif %}
+            {{ profile_form.picture.as_widget }}
+        </div>
+
         <button type="submit">Save changes</button>
     </form>
 {% endblock %}
