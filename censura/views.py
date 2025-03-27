@@ -404,7 +404,7 @@ def delete_comment(request, comment_id):
 def ajax_search_movies(request):
     query = request.GET.get('query', '')
     if query:
-        movies = Movie.objects.filter(name__icontains=query)[
+        movies = Movie.objects.filter(name__icontains=query).distinct()[
             :10]  # Limit results
         movie_list = [{'name': movie.name, 'slug': movie.slug} for movie in movies]
         return JsonResponse({'movies': movie_list})

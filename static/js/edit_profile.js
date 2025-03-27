@@ -36,6 +36,9 @@ function toggleLike(slug, displayName) {
                     const tag = document.querySelector(`[data-movie-slug="${slug}"]`);
                     if (tag) tag.remove();
                 } else {
+                    const existingTag = document.querySelector(`[data-movie-slug="${slug}"]`);
+                    if (existingTag) return; // already in the DOM
+                
                     const likedMoviesContainer = document.getElementById('liked-movies-container');
                     const newTag = document.createElement('div');
                     newTag.className = 'movie-tag';
@@ -47,6 +50,7 @@ function toggleLike(slug, displayName) {
                     `;
                     likedMoviesContainer.appendChild(newTag);
                 }
+                
             }
         });
 }
