@@ -112,7 +112,7 @@ body {
 .small-movie-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px; /* Slightly increased spacing between movies */
+  gap: 12px; 
   list-style-type: none;
   padding: 0;
   margin: 0;
@@ -120,21 +120,21 @@ body {
 }
 
 .small-movie-element {
-  flex: 1 1 calc(14% - 12px); /* Slightly larger size for movies */
-  max-width: 130px; /* Slightly increased width */
+  flex: 1 1 calc(14% - 12px); 
+  max-width: 130px; 
   text-align: center;
 }
 
 .small-movie-element img {
   width: 100%;
   height: auto;
-  border-radius: 7px; /* Slightly larger border radius */
+  border-radius: 7px; 
 }
 
 .small-movie-element span {
   display: block;
   margin-top: 5px;
-  font-size: 0.85em; /* Slightly increased font size */
+  font-size: 0.85em; 
   font-weight: bold;
   color: #f5f5f5;
   text-decoration: none;
@@ -217,28 +217,30 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 20px; /* Space between the sections */
+  gap: 20px; 
 }
 
-/* reviews on account page */
 .account-left {
-  flex: 2; /* Left section for favourites and least favourites */
+  flex: 2; 
+  max-width: 50%; 
 }
 
 .account-right {
-  flex: 1; /* Right section for recent reviews */
-  margin-right: 190px; /* Increase distance from the right edge */
+  flex: 1; 
+  margin-left: 20px; 
+  max-width: 45%; 
 }
 
 .movie-reviews {
   display: flex;
   flex-direction: column;
-  gap: 15px; /* Space between reviews */
+  gap: 15px; 
   margin-top: 0;
   margin-bottom: 0;
-  max-width: 100%; /* Ensure it fits within the right section */
-  list-style-type: none; /* Remove bullet points */
-  padding: 0; /* Remove default padding */
+  list-style-type: none; 
+  padding: 0; 
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
 }
 
 .review {
@@ -248,7 +250,9 @@ body {
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
   background-color: #1f1f1f;
   color: #f5f5f5;
-  word-wrap: break-word;
+  word-wrap: break-word; 
+  overflow-wrap: break-word; 
+  white-space: normal; 
 }
 
 /* DISPLAY MOVIES */
