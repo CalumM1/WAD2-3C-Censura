@@ -213,6 +213,44 @@ body {
   margin-bottom: 0;
 }
 
+.account-page-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px; /* Space between the sections */
+}
+
+/* reviews on account page */
+.account-left {
+  flex: 2; /* Left section for favourites and least favourites */
+}
+
+.account-right {
+  flex: 1; /* Right section for recent reviews */
+  margin-right: 190px; /* Increase distance from the right edge */
+}
+
+.movie-reviews {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Space between reviews */
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 100%; /* Ensure it fits within the right section */
+  list-style-type: none; /* Remove bullet points */
+  padding: 0; /* Remove default padding */
+}
+
+.review {
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  background-color: #1f1f1f;
+  color: #f5f5f5;
+  word-wrap: break-word;
+}
+
 /* DISPLAY MOVIES */
 .movie-card {
   position: relative;
