@@ -53,12 +53,12 @@ def user_logout(request):
 def my_account(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     user_reviews = Review.objects.filter(
-        user=user_profile.user).order_by('-created_at')[:5]
+        user=user_profile.user).order_by('-created_at')[:3]
     liked_movies = user_profile.likes.all()
     favourites = liked_movies[:5]
 
     least_favourites = Review.objects.filter(
-        user=user_profile.user).order_by('rating')[:5]
+        user=user_profile.user, rating__lt=5).order_by('rating')[:5]
     least_favourites = [review.movie for review in least_favourites]
 
     context = {
