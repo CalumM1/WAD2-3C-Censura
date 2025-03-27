@@ -97,13 +97,20 @@
         
         <div id="all-reviews" class="movie-reviews">
             {% for review in all_reviews %}
-                <div class="review" data-review-url="{% url 'censura:review' movie.slug review.user.username %}">
-                    <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>
-                    <p>Rating: {{ review.rating }}/10</p>
-                    <p>{{ review.text }}</p>
-                    <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
-                    <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
-                </div>
+            <div class="review" data-review-url="{% url 'censura:review' movie.slug review.user.username %}">
+                <h4>Reviewed by <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}</a></h4>
+                <p>Rating: {{ review.rating }}/10</p>
+                <p>{{ review.text }}</p>
+                {% if user.is_authenticated %}
+                <button class="like-review-btn" data-review-id="{{ review.id }}">
+                    <span class="thumb {% if user in review.likes.all %}liked{% endif %}">
+                        👍 <span class="like-count">{{ review.likes.count }}</span>
+                    </span>
+                </button>
+                {% endif %}
+                <a href="{% url 'censura:review' movie.slug review.user.username %}">Read More</a>
+                <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+            </div>
             {% endfor %}
         </div>       
     {% else %}

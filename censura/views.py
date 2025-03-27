@@ -55,13 +55,27 @@ def my_account(request, username):
     user_reviews = Review.objects.filter(
         user=user_profile.user).order_by('-created_at')[:5]
     liked_movies = user_profile.likes.all()
+    favourites = liked_movies[:5]
 
     context = {
         'user_profile': user_profile,
         'user_reviews': user_reviews,
         'liked_movies': liked_movies,
+        'favourites': favourites,
     }
     return render(request, 'censura/account.html', context)
+
+
+@login_required
+def friends(request, username):
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    friends = user_profile.friends.all()
+    context = {
+        'friends': friends,
+        'num_friends': len(friends),
+        'username': username,
+    }
+    return render(request, 'censura/friends.html', context=context)
 
 
 @login_required
@@ -97,7 +111,6 @@ def my_favourites(request, username):
 
 @login_required
 def toggle_favourite(request, movie_name_slug):
-    print("Toggle favourite view reached for:", movie_name_slug)
     movie = get_object_or_404(Movie, slug=movie_name_slug)
     user_profile, created = UserProfile.objects.get_or_create(
         user=request.user)
@@ -110,6 +123,23 @@ def toggle_favourite(request, movie_name_slug):
         is_favourite = True
 
     return JsonResponse({'success': True, 'is_favourite': is_favourite})
+
+@login_required
+def toggle_review_like(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
+    
+    if request.user in review.likes.all():
+        review.likes.remove(request.user)
+        liked = False
+    else:
+        review.likes.add(request.user)
+        liked = True
+        
+    return JsonResponse({
+        'success': True, 
+        'liked': liked,
+        'total_likes': review.likes.count()
+    })
 
 
 @login_required

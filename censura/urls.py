@@ -23,10 +23,14 @@ urlpatterns = [
     path('user/<str:username>/my-favourites/', views.my_favourites, name='my_favourites'),
 
     path('user/<str:username>/my-reviews/', views.my_reviews, name='my_reviews'),
+
+    path('reviews/<int:review_id>/toggle-like/', views.toggle_review_like, name='toggle_review_like'),
     
     path('user/<str:username>/add-friend/', views.add_friend, name='add_friend'),
     
     path('user/<str:username>/remove-friend/', views.remove_friend, name='remove_friend'),
+    
+    path('user/<str:username>/friends/', views.friends, name='friends'),
 
     path('movies/', views.view_movies, name='movies'),
 
