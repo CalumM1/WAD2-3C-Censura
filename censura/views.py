@@ -1,6 +1,7 @@
 from django.http import JsonResponse, HttpResponse, HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.urls import reverse
@@ -158,6 +159,36 @@ def signup(request):
         user_form = UserForm()
 
     return render(request, 'censura/signup.html', {'user_form': user_form})
+
+
+@login_required
+def add_friend(request, username):
+    if request.method == 'POST':
+        user_to_add = get_object_or_404(User, username=username)
+        user_profile = request.user.userprofile
+        friend_profile = user_to_add.userprofile
+        
+        if friend_profile not in user_profile.friends.all():
+            user_profile.friends.add(friend_profile)
+        
+        return redirect(reverse(("censura:my_account"), args=[username]))
+        
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
+
+
+@login_required
+def remove_friend(request, username):
+    if request.method == 'POST':
+        user_to_remove = get_object_or_404(User, username=username)
+        user_profile = request.user.userprofile
+        friend_profile = user_to_remove.userprofile
+
+        if friend_profile in user_profile.friends.all():
+            user_profile.friends.remove(friend_profile)
+
+        return redirect(reverse("censura:my_account", args=[username]))
+
+    return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 
 @login_required

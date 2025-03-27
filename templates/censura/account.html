@@ -1,25 +1,44 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Account
+	{{ user_profile.user.username }}'s account
 {% endblock %}
 
 {% block body_block %}
 
-    <h2>{{ user.username }}'s Account</h2>
-    {% if user.userprofile.picture %}
-        <img src="{{ user.userprofile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+    <h2>{{ user_profile.user.username }}'s Account</h2>
+
+
+    {% if user != user_profile.user %}
+    {% if user_profile in user.userprofile.friends.all %}
+        <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Remove Friend</button>
+        </form>
     {% else %}
-        <p>No profile picture uploaded.</p>
+        <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary">Add Friend</button>
+        </form>
     {% endif %}
+{% endif %}
+
+    <div>
+        <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+    </div>    
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
     <ul id="search-results"></ul>
 
     <div class="account-links">
-        <a href="{% url 'censura:my_reviews' user.username %}">My Reviews</a>
-        <a href="{% url 'censura:my_favourites' user.username %}">My Favourites</a>
-        <a href="{% url 'censura:edit_profile' user.username %}">Edit Profile</a>
+    {% if user == user_profile.user %}   
+            <a href="{% url 'censura:my_reviews' user_profile.user.username %}">My Reviews</a>
+            <a href="{% url 'censura:my_favourites' user_profile.user.username %}">My Favourites</a>
+            <a href="{% url 'censura:edit_profile' user_profile.user.username %}">Edit Profile</a>
+    {% else %}
+            <a href="{% url 'censura:my_reviews' user_profile.user.username %}">See {{ user_profile.user.username }}'s Reviews</a>
+            <a href="{% url 'censura:my_favourites' user_profile.user.username %}">See {{ user_profile.user.username }}'s Favourites</a>
+    {% endif %}
     </div>
 
 {% endblock %}
