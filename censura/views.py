@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.urls import reverse
 from .forms import UserForm, UserProfileForm, ReviewForm, CommentForm
-from .models import UserProfile, Review, Movie, Comment
+from .models import UserProfile, Review, Movie, Comment, Genre
 from django.http import JsonResponse
 
 
@@ -68,6 +68,7 @@ def my_account(request, username):
 def my_favourites(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     liked_movies = user_profile.likes.all().order_by('-release_date')
+    all_genres = Genre.objects.all()
 
     # paginator = Paginator(liked_movies, 6)
     # page_number = request.GET.get('page')
@@ -92,7 +93,7 @@ def my_favourites(request, username):
     paginator = Paginator(liked_movies, 24)
     page = request.GET.get('page')
     movies = paginator.get_page(page)
-    context_dict = {"movies": movies, "favourites": True}
+    context_dict = {"movies": movies, "favourites": True, "genres":all_genres}
     return render(request, 'censura/movies.html', context=context_dict)
 
 
@@ -215,11 +216,29 @@ def about(request):
 
 
 def view_movies(request):
-    all_movies = Movie.objects.all()
-    paginator = Paginator(all_movies, 24)
+    if request.method == 'POST':
+        return redirect(reverse('censura:movies'))
+    
+    query = request.GET.get('q', '')
+    genre = request.GET.get('genre', '')
+    year = request.GET.get('year', '')
+
+    movies = Movie.objects.all()
+
+    if query:
+        movies = movies.filter(name__icontains=query)
+
+    if genre:
+        movies = movies.filter(genre__name=genre)
+
+    if year:
+        movies = movies.filter(release_date__icontains=year)
+    
+    all_genres = Genre.objects.all()
+    paginator = Paginator(movies, 24)
     page = request.GET.get('page')
     movies = paginator.get_page(page)
-    context_dict = {"movies": movies}
+    context_dict = {"movies": movies, "genres": all_genres}
     return render(request, 'censura/movies.html', context=context_dict)
 
 
