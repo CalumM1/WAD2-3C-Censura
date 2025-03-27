@@ -20,6 +20,7 @@ function searchMovies() {
                 const li = document.createElement('li');
                 li.textContent = movie.name;
                 li.className = 'list-group-item list-group-item-action';
+                li.style.color = 'black';
                 li.style.cursor = 'pointer';
                 li.onclick = () => toggleLike(movie.slug, movie.name);
                 resultsContainer.appendChild(li);
@@ -43,7 +44,7 @@ function toggleLike(slug, displayName) {
                     const newTag = document.createElement('div');
                     newTag.className = 'movie-tag';
                     newTag.dataset.movieSlug = slug;
-                    newTag.style = 'background-color: #eee; padding: 5px 10px; border-radius: 20px; display: flex; align-items: center;';
+                    newTag.style = 'background-color: #444; padding: 5px 10px; border-radius: 20px; display: flex; align-items: center;';
                     newTag.innerHTML = `
                         <span>${displayName}</span>
                         <button onclick="toggleLike('${slug}', '${displayName}')" style="background: none; border: none; margin-left: 8px; font-weight: bold; cursor: pointer;">&times;</button>
