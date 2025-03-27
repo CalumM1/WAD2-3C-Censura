@@ -23,14 +23,11 @@ class UserForm(forms.ModelForm):
 
 
 class UserProfileForm(forms.ModelForm):
-    likes = forms.ModelMultipleChoiceField(
-        queryset=Movie.objects.all(), 
-        widget=forms.CheckboxSelectMultiple(),
-        required=False)
     
     class Meta:
         model = UserProfile
-        fields = ('likes', 'picture')
+        fields = ('picture',)
+    
 
 
 class ReviewForm(forms.ModelForm):

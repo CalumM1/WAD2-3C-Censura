@@ -378,7 +378,7 @@ def ajax_search_movies(request):
     if query:
         movies = Movie.objects.filter(name__icontains=query)[
             :10]  # Limit results
-        movie_list = [{'name': movie.name} for movie in movies]
+        movie_list = [{'name': movie.name, 'slug': movie.slug} for movie in movies]
         return JsonResponse({'movies': movie_list})
     return JsonResponse({'movies': []})
 
