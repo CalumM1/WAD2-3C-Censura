@@ -162,8 +162,7 @@ def toggle_review_like(request, review_id):
 
 def my_reviews(request, username):
     user = UserProfile.objects.get(user__username=username).user
-    user_reviews = Review.objects.filter(
-        user=user).order_by('-created_at')
+    user_reviews = Review.objects.filter(user=user).order_by('-created_at')
     paginator = Paginator(user_reviews, 5)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -175,13 +174,16 @@ def my_reviews(request, username):
                     'type': 'review',
                     'movie': review.movie.name,
                     'rating': review.rating,
-                    'text': review.text
+                    'text': review.text,
+                    'likes_count': review.likes.count(),
+                    'created_at': review.created_at.strftime("%B %d, %Y"),
+                    'url': reverse('censura:review', args=[review.movie.slug, review.user.username])
                 } for review in page_obj
             ],
             'has_next': page_obj.has_next(),
         })
 
-    return render(request, 'censura/read_review.html', {'reviews': page_obj, 'review_user':user})
+    return render(request, 'censura/read_review.html', {'reviews': page_obj, 'review_user': user})
 
 
 def signup(request):

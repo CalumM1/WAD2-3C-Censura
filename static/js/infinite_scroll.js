@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let container = document.getElementById('infinite-scroll-container');
     let loadingIndicator = document.getElementById('loading');
 
-    if (!container || !loadingIndicator) return;  // Exit if no container found
+    if (!container || !loadingIndicator) return;
 
     window.addEventListener('scroll', function () {
         if (loading) return;
@@ -23,23 +23,21 @@ document.addEventListener('DOMContentLoaded', function () {
                     if (data.items.length > 0) {
                         data.items.forEach(item => {
                             let div = document.createElement('div');
-                            div.classList.add('scroll-item');
-
-                            if (item.type === 'movie') {  // If it's a movie (favourites)
-                                div.innerHTML = `
-                                    <img src="${item.image}" alt="${item.name}">
-                                    <h4>${item.name}</h4>
-                                    <p>Directed by: ${item.director}</p>
-                                    <p>Released: ${item.release_date}</p>
-                                `;
-                            } else if (item.type === 'review') {  // If it's a review
-                                div.innerHTML = `
+                            div.classList.add('review', 'scroll-item');
+                            div.innerHTML = `
+                                <div style="display: flex; justify-content: space-between;">
                                     <h4>${item.movie}</h4>
-                                    <p>Rating: ${item.rating}/10</p>
-                                    <p>${item.text}</p>
-                                `;
-                            }
-
+                                    <button class="like-review-btn" data-review-id="">
+                                        <span class="thumb">
+                                            👍 <span class="like-count">${item.likes_count}</span>
+                                        </span>
+                                    </button>
+                                </div>
+                                <p>Rating: ${item.rating}/10</p>
+                                <p>${item.text}</p>
+                                <a href="${item.url}">See Thread</a>
+                                <p class="review-date">${item.created_at}</p>
+                            `;
                             container.appendChild(div);
                         });
 
@@ -51,6 +49,11 @@ document.addEventListener('DOMContentLoaded', function () {
                         window.removeEventListener('scroll', arguments.callee);
                     }
 
+                    loadingIndicator.style.display = 'none';
+                })
+                .catch(error => {
+                    console.error("Error fetching reviews:", error);
+                    loading = false;
                     loadingIndicator.style.display = 'none';
                 });
         }
