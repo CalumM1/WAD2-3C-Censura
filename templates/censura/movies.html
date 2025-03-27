@@ -1,58 +1,88 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Movies
+Movies
 {% endblock %}
 
 {% block body_block %}
-	<!-- <div class="grid-container">
-		{% for movie in movies %}
-		<a href="{% url 'censura:movie' movie.slug %}">
-			<div class="grid-item">
-				<img src="{{ movie.image.url }}" alt="{{ movie.slug }}">
-				<div class="title">{{movie.name}}</div>
-			</div>
-		</a>
-		{% endfor %}
-	</div> -->
-
-	<div class="container">
-		
-		<div class="row">
-			{% for movie in movies %}
-			<div class="col-lg-2 col-md-4 col-sm-6">
-				<a style="text-decoration: none;color: inherit;" href="{% url 'censura:movie' movie.slug %}">
-					<div class="card movie-card text-center">
-						<img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.slug }}">
-						<div class="overlay">
-							<p class="overlay-text">{{ movie.name }}</p>
-						</div>
+<div class="container">
+	<div class="row">
+		<!-- Sidebar for search & filters -->
+		<div class="col-lg-3 col-md-4">
+			<div class="card p-3">
+				<h5>Filter Movies</h5>
+				<form method="GET">
+					<!-- Search bar -->
+					<div class="mb-3">
+						<input type="text" name="q" class="form-control" placeholder="Search..."
+							value="{{ request.GET.q }}">
 					</div>
-				</a>
-				
+					<!-- Genre filter -->
+					<div class="mb-3">
+						<label class="form-label">Genre</label>
+						<select name="genre" class="form-select">
+							<option value="">All</option>
+							{% for genre in genres %}
+							<option value="{{ genre.name }}" {% if request.GET.genre == genre.name %}selected{% endif %}>
+								{{ genre.name }}
+							</option>
+							{% endfor %}
+						</select>
+					</div>
+					<!-- Release Year Filter -->
+					<div class="mb-3">
+						<label class="form-label">Release Year</label>
+						<input type="number" name="year" class="form-control" placeholder="e.g. 2020"
+							value="{{ request.GET.year }}">
+					</div>
+					<button type="submit" class="btn btn-dark w-100">Apply Filters</button>
+				</form>
+				<form method="POST" style="margin-top: 20px;">
+					{% csrf_token %}
+					<button type="submit" class="btn btn-dark w-100">Clear Filters</button>
+				</form>
 			</div>
-			{% endfor %}
 		</div>
-		
-	
+
+		<!-- Movies Grid -->
+		<div class="col-lg-9 col-md-8">
+			<div class="row">
+				{% for movie in movies %}
+				<div class="col-lg-3 col-md-4 col-sm-6">
+					<a style="text-decoration: none; color: inherit;" href="{% url 'censura:movie' movie.slug %}">
+						<div class="card movie-card text-center">
+							<img src="{{ movie.image.url }}" class="card-img-top" alt="{{ movie.slug }}">
+							<div class="overlay">
+								<p class="overlay-text">{{ movie.name }}</p>
+							</div>
+						</div>
+					</a>
+				</div>
+				{% endfor %}
+			</div>
+
+			<div class="pagination">
+				{% if movies.has_previous %}
+				<a class="btn btn-dark"
+					href="?page=1{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">First</a>
+			
+				<a class="btn btn-dark"
+					href="?page={{ movies.previous_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Prev</a>
+				{% endif %}
+			
+				<span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
+			
+				{% if movies.has_next %}
+				<a class="btn btn-dark"
+					href="?page={{ movies.next_page_number }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Next</a>
+			
+				<a class="btn btn-dark"
+					href="?page={{ movies.paginator.num_pages }}{% if request.GET.q %}&q={{ request.GET.q }}{% endif %}{% if request.GET.genre %}&genre={{ request.GET.genre }}{% endif %}{% if request.GET.year %}&year={{ request.GET.year }}{% endif %}">Last</a>
+				{% endif %}
+			</div>
+
+
+		</div>
 	</div>
-
-	<div class="pagination">
-		{% if movies.has_previous %}
-		<a class="btn btn-dark" href="?page=1">First</a>
-		<a class="btn btn-dark" href="?page={{ movies.previous_page_number }}">Prev</a>
-		{% endif %}
-	
-		<span>Page {{ movies.number }} of {{ movies.paginator.num_pages }}</span>
-	
-		{% if movies.has_next %}
-		<a class="btn btn-dark" href="?page={{ movies.next_page_number }}">Next</a>
-		<a class="btn btn-dark" href="?page={{ movies.paginator.num_pages }}">Last</a>
-		{% endif %}
-	</div>
-
-	{% if favourites %}
-		<a href="{% url 'censura:my_account' user.username %}">Back</a>
-	{% endif %}
-
+</div>
 {% endblock %}

@@ -10,18 +10,20 @@
 
 
     {% if user != user_profile.user %}
-    {% if user_profile in user.userprofile.friends.all %}
-        <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-danger">Remove Friend</button>
-        </form>
-    {% else %}
-        <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
-            {% csrf_token %}
-            <button type="submit" class="btn btn-primary">Add Friend</button>
-        </form>
+        {% if user_profile in user.userprofile.friends.all %}
+            <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Remove Friend</button>
+            </form>
+        {% else %}
+            <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-primary">Add Friend</button>
+            </form>
+        {% endif %}
     {% endif %}
-{% endif %}
+        
+    <a href="{% url 'censura:friends' user_profile.user %}">Friends</a>
 
     <div>
         <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
@@ -39,6 +41,23 @@
             <a href="{% url 'censura:my_reviews' user_profile.user.username %}">See {{ user_profile.user.username }}'s Reviews</a>
             <a href="{% url 'censura:my_favourites' user_profile.user.username %}">See {{ user_profile.user.username }}'s Favourites</a>
     {% endif %}
+    </div>
+
+
+    <div>
+        <h2>
+            {{ user_profile.user.username }}'s <a href="{% url 'censura:my_favourites' user_profile.user.username %}">favourites</a>
+        </h2>
+        <ul>
+            {% for movie in favourites %}
+                <li class="movie_element">
+                    <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
+                        <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
+                        <span>{{ movie.name }}</span>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 
 {% endblock %}
