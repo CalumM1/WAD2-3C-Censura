@@ -48,9 +48,9 @@
         <h2>
             {{ user_profile.user.username }}'s <a href="{% url 'censura:my_favourites' user_profile.user.username %}">favourites</a>
         </h2>
-        <ul>
+        <ul class="small-movie-list">
             {% for movie in favourites %}
-                <li class="movie_element">
+                <li class="small-movie-element">
                     <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
                         <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
                         <span>{{ movie.name }}</span>
@@ -59,15 +59,14 @@
             {% endfor %}
         </ul>
     </div>
-
-
+    
     <div>
         <h2>
             {{ user_profile.user.username }}'s <a href="{% url 'censura:least_favourites' user_profile.user.username %}">least favourites</a>
         </h2>
-        <ul>
+        <ul class="small-movie-list">
             {% for movie in least_favourites %}
-                <li class="movie_element">
+                <li class="small-movie-element">
                     <a style="text-decoration: none;" class="movie" href="{% url 'censura:movie' movie.slug %}">
                         <img src="{{ movie.image.url }}" alt="{{ movie.name }}">
                         <span>{{ movie.name }}</span>

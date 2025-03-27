@@ -88,6 +88,37 @@ body {
   text-decoration: none;
 }
 
+.small-movie-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px; /* Slightly increased spacing between movies */
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  justify-content: left;
+}
+
+.small-movie-element {
+  flex: 1 1 calc(14% - 12px); /* Slightly larger size for movies */
+  max-width: 130px; /* Slightly increased width */
+  text-align: center;
+}
+
+.small-movie-element img {
+  width: 100%;
+  height: auto;
+  border-radius: 7px; /* Slightly larger border radius */
+}
+
+.small-movie-element span {
+  display: block;
+  margin-top: 5px;
+  font-size: 0.85em; /* Slightly increased font size */
+  font-weight: bold;
+  color: #f5f5f5;
+  text-decoration: none;
+}
+
 .welcome_container {
   display: flex;
   justify-content: space-between;
