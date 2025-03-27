@@ -57,11 +57,16 @@ def my_account(request, username):
     liked_movies = user_profile.likes.all()
     favourites = liked_movies[:5]
 
+    least_favourites = Review.objects.filter(
+        user=user_profile.user).order_by('rating')[:5]
+    least_favourites = [review.movie for review in least_favourites]
+
     context = {
         'user_profile': user_profile,
         'user_reviews': user_reviews,
         'liked_movies': liked_movies,
         'favourites': favourites,
+        'least_favourites': least_favourites, 
     }
     return render(request, 'censura/account.html', context)
 
@@ -107,6 +112,19 @@ def my_favourites(request, username):
     movies = paginator.get_page(page)
     context_dict = {"movies": movies, "favourites": True, "genres": all_genres}
     return render(request, 'censura/movies.html', context=context_dict)
+
+
+def least_favourites(request, username):
+    user_profile = get_object_or_404(UserProfile, user__username=username)
+    least_favourites = Review.objects.filter(
+        user=user_profile.user).order_by('rating')[:5]
+    least_favourites = [review.movie for review in least_favourites]
+
+    context = {
+        'movies': least_favourites,
+        'username': username,
+    }
+    return render(request, 'censura/movies.html', context=context)
 
 
 @login_required
