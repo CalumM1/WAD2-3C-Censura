@@ -6,16 +6,19 @@
 
 {% block body_block %}
 
-    <h2>{{ user_profile.user.username }}'s Account</h2>
 
-<!-- filepath: c:\Computing\Computing\Year_2\WAD2\Team_Project_3C\WAD2-3C-Censura\templates\censura\account.html -->
 <div class="account-header">
-    <!-- Profile Picture -->
+    <!-- Account Title -->
+    <div class="account-title-container">
+        <h2 class="account-title">{{ user_profile.user.username }}'s Account</h2>
+    </div>
+
+
     <div class="profile-picture-container">
         <img class="profile-picture" src="{{ user_profile.picture.url }}" alt="Profile Picture">
     </div>
 
-    <!-- Buttons -->
+ 
     <div class="account-buttons">
         {% if user != user_profile.user %}
             {% if user_profile in user.userprofile.friends.all %}
