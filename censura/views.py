@@ -69,6 +69,7 @@ def friends(request, username):
     user_profile = get_object_or_404(UserProfile, user__username=username)
     context = {
         'friends': user_profile.friends.all(),
+        'num_friends': len(user_profile.friends.all()),
         'username': username,
     }
     return render(request, 'censura/friends.html', context=context)

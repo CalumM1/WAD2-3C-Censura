@@ -13,17 +13,17 @@
         {% if user_profile in user.userprofile.friends.all %}
             <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-danger">Unfollow</button>
+                <button type="submit" class="btn btn-danger">Remove Friend</button>
             </form>
         {% else %}
             <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
                 {% csrf_token %}
-                <button type="submit" class="btn btn-primary">Follow</button>
+                <button type="submit" class="btn btn-primary">Add Friend</button>
             </form>
         {% endif %}
     {% endif %}
         
-    <a href="{% url 'censura:friends' user_profile.user %}">Followers</a>
+    <a href="{% url 'censura:friends' user_profile.user %}">Friends</a>
 
     <div>
         <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">

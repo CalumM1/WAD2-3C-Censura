@@ -1,14 +1,17 @@
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-    Followers
+    Friends
 {% endblock %}
 
 {% block body_block %}
 
-    <h1>{{ username }}'s followers</h1>
+    <h1>{{ username }}'s friends</h1>
 
     <div>
+        {% if num_friends == 0 %}
+            <h3>You have no friends :(</h3>
+        {% endif %}
         <ul>
             {% for friend in friends%}
                 <li><a href="{% url 'censura:my_account' friend %}">{{ friend }}</a></li>
