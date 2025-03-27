@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let page = 2;  // Start from page 2
+    let page = 2; 
     let loading = false;
     let container = document.getElementById('infinite-scroll-container');
     let loadingIndicator = document.getElementById('loading');
@@ -26,7 +26,9 @@ document.addEventListener('DOMContentLoaded', function () {
                             div.classList.add('review', 'scroll-item');
                             div.innerHTML = `
                                 <div style="display: flex; justify-content: space-between;">
-                                    <h4>${item.movie}</h4>
+                                    <h4>
+                                        <a href="${item.url}">${item.movie}</a>
+                                    </h4>
                                     <button class="like-review-btn" data-review-id="">
                                         <span class="thumb">
                                             👍 <span class="like-count">${item.likes_count}</span>
@@ -35,7 +37,6 @@ document.addEventListener('DOMContentLoaded', function () {
                                 </div>
                                 <p>Rating: ${item.rating}/10</p>
                                 <p>${item.text}</p>
-                                <a href="${item.url}">See Thread</a>
                                 <p class="review-date">${item.created_at}</p>
                             `;
                             container.appendChild(div);

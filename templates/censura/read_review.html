@@ -1,4 +1,3 @@
-<!-- filepath: c:\Computing\Computing\Year_2\WAD2\Team_Project_3C\WAD2-3C-Censura\templates\censura\read_review.html -->
 {% extends 'censura/base.html' %}
 {% load static %} 
 {% block title_block %}
@@ -35,7 +34,6 @@
     {% endfor %}
 </div>
 
-<!-- Move the Back button outside the review container -->
 <div style="margin-top: 20px;">
     <a class="btn btn-dark" href="{% url 'censura:my_account' user.username %}">Back</a>
 </div>
