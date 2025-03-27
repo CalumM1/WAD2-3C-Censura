@@ -28,7 +28,7 @@ SECRET_KEY = '0f7t8jsg*z06aq9stx_2lvmj52$rfmpszr(d8b22x92nl2r@$t'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['rangodemo2020.pythonanywhere.com']
+ALLOWED_HOSTS = ['censura.pythonanywhere.com']
 
 
 # Application definition
