@@ -16,11 +16,8 @@
         </form>
     {% endif %}
 
-    {% if user_profile.picture %}
-        <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
-    {% else %}
-        <img src="{{ MEDIA_DIR }}default_picture.jpg" alt="Profile Picture" style="width: 150px; height: auto;">
-    {% endif %}
+    <img src="{{ user_profile.picture.url }}" alt="Profile Picture" style="width: 150px; height: auto;">
+  
 
 	<input type="text" id="movie-search" placeholder="Search for a movie..." onkeyup="searchMovies()">
     <ul id="search-results"></ul>
