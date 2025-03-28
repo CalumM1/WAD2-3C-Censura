@@ -210,12 +210,13 @@ def add_friend(request, username):
         user_to_add = get_object_or_404(User, username=username)
         user_profile = request.user.userprofile
         friend_profile = user_to_add.userprofile
-        
+
         if friend_profile not in user_profile.friends.all():
             user_profile.friends.add(friend_profile)
-        
-        return redirect(reverse(("censura:my_account"), args=[username]))
-        
+
+        next_url = request.POST.get('next', reverse('censura:my_account', args=[username]))
+        return redirect(next_url)
+
     return JsonResponse({'success': False, 'message': 'Invalid request'})
 
 
@@ -251,6 +252,15 @@ def edit_profile(request, username):
         profile_form = UserProfileForm(instance=user.userprofile)
 
     return render(request, 'censura/edit-profile.html', {'profile_form': profile_form})
+
+
+@login_required
+def find_friends(request):
+    current_user_profile = request.user.userprofile
+    users = UserProfile.objects.filter(user__username__isnull=False).exclude(user__username='').exclude(user=current_user_profile.user)
+    friends = current_user_profile.friends.all()
+    context = {'users': users, 'friends': friends}
+    return render(request, 'censura/find_friends.html', context=context)
 
 
 def about(request):
