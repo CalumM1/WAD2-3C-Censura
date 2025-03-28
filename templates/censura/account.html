@@ -93,6 +93,7 @@
                         <p>Rating: {{ review.rating }}/10</p>
                         <p>{{ review.text|truncatewords:20 }}</p> <!-- Truncate long reviews -->
                         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+                        <a href="{% url 'censura:review' review.movie.slug review.user.username %}">See Thread</a>
                     </li>
                 {% endfor %}
             </ul>
