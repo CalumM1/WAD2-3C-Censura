@@ -7,43 +7,44 @@
 {% block body_block %}
 
 
-<div class="account-header">
-    <!-- Account Title -->
-    <div class="account-title-container">
-        <h2 class="account-title">{{ user_profile.user.username }}'s Account</h2>
-    </div>
+    <div class="account-header">
+        <!-- Account Title -->
+        <div class="account-title-container">
+            <h2 class="account-title">{{ user_profile.user.username }}'s Account</h2>
+        </div>
 
 
-    <div class="profile-picture-container">
-        <img class="profile-picture" src="{{ user_profile.picture.url }}" alt="Profile Picture">
-    </div>
+        <div class="profile-picture-container">
+            <img class="profile-picture" src="{{ user_profile.picture.url }}" alt="Profile Picture">
+        </div>
 
- 
-    <div class="account-buttons">
-        {% if user != user_profile.user %}
-            {% if user_profile in user.userprofile.friends.all %}
-                <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-danger">Remove Friend</button>
-                </form>
-            {% else %}
-                <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-primary">Add Friend</button>
-                </form>
+    
+        <div class="account-buttons">
+            {% if user != user_profile.user %}
+                {% if user_profile in user.userprofile.friends.all %}
+                    <form method="POST" action="{% url 'censura:remove_friend' user_profile.user.username %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger">Remove Friend</button>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'censura:add_friend' user_profile.user.username %}">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary">Add Friend</button>
+                    </form>
+                {% endif %}
             {% endif %}
-        {% endif %}
-        <a href="{% url 'censura:friends' user_profile.user %}" class="btn btn-secondary">Friends</a>
-        {% if user == user_profile.user %}
-            <a href="{% url 'censura:my_reviews' user_profile.user.username %}" class="btn btn-secondary">My Reviews</a>
-            <a href="{% url 'censura:my_favourites' user_profile.user.username %}" class="btn btn-secondary">My Favourites</a>
-            <a href="{% url 'censura:edit_profile' user_profile.user.username %}" class="btn btn-secondary">Edit Profile</a>
-        {% else %}
-            <a href="{% url 'censura:my_reviews' user_profile.user.username %}" class="btn btn-secondary">See {{ user_profile.user.username }}'s Reviews</a>
-            <a href="{% url 'censura:my_favourites' user_profile.user.username %}" class="btn btn-secondary">See {{ user_profile.user.username }}'s Favourites</a>
-        {% endif %}
+            <a href="{% url 'censura:friends' user_profile.user %}" class="btn btn-secondary">Friends</a>
+            {% if user == user_profile.user %}
+                <a href="{% url 'censura:my_reviews' user_profile.user.username %}" class="btn btn-secondary">My Reviews</a>
+                <a href="{% url 'censura:my_favourites' user_profile.user.username %}" class="btn btn-secondary">My Favourites</a>
+                <a href="{% url 'censura:edit_profile' user_profile.user.username %}" class="btn btn-secondary">Edit Profile</a>
+            {% else %}
+                <a href="{% url 'censura:my_reviews' user_profile.user.username %}" class="btn btn-secondary">See {{ user_profile.user.username }}'s Reviews</a>
+                <a href="{% url 'censura:my_favourites' user_profile.user.username %}" class="btn btn-secondary">See {{ user_profile.user.username }}'s Favourites</a>
+            {% endif %}
+        </div>
     </div>
-</div>
+
 
 
     <div class="account-page-container">
@@ -64,7 +65,7 @@
                     {% endfor %}
                 </ul>
             </div>
-    
+
             <div>
                 <h2>
                     {{ user_profile.user.username }}'s <a href="{% url 'censura:least_favourites' user_profile.user.username %}">least favourites</a>
@@ -81,7 +82,7 @@
                 </ul>
             </div>
         </div>
-    
+
         <!-- Right Section -->
         <div class="account-right">
             <h2>{{ user_profile.user.username }}'s Recent Reviews</h2>
