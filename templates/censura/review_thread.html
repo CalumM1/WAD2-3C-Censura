@@ -13,7 +13,9 @@
         <!-- Main Review -->
         <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 15px;">
             <img src="{{ review.user.userprofile.picture.url }}" alt="{{ review.user.username }}'s Profile Picture" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;">
-            <h2>{{ review.user.username }}'s Review</h2>
+            <h2>
+                <a href="{% url 'censura:my_account' review.user.username %}">{{ review.user.username }}'s</a> Review
+            </h2>
         </div>
         {% if user.is_authenticated %}
         <button class="like-review-btn" data-review-id="{{ review.id }}" style="margin-bottom: 15px;">
@@ -40,7 +42,9 @@
                     {% if comment.user == review.user %}
                         <h5 style="color: blue">{{ comment.user.username }}</h5>
                     {% else %}
-                        <h5>{{ comment.user.username }}</h5>
+                        <h5>
+                            <a href="{% url 'censura:my_account' comment.user.username %}">{{ comment.user.username }}</a>
+                        </h5>
                     {% endif %}
                     <p>{{ comment.text }}</p>
                     {% if comment.user == user or user.is_superuser %}
