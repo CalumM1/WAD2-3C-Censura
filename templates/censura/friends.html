@@ -10,13 +10,18 @@
 
     <div>
         {% if num_friends == 0 %}
-            <h3>You have no friends :(</h3>
+            {% if user.username == username %}
+                <h3>You have no friends :(</h3>
+            {% else %}
+                <h3>{{ username }} has no friends :(</h3>
+            {% endif %}
+        {% else %}
+            <ul>
+                {% for friend in friends %}
+                    <li><a href="{% url 'censura:my_account' friend %}">{{ friend }}</a></li>
+                {% endfor %}
+            </ul>
         {% endif %}
-        <ul>
-            {% for friend in friends%}
-                <li><a href="{% url 'censura:my_account' friend %}">{{ friend }}</a></li>
-            {% endfor %}
-        </ul>
     </div>
 
 {% endblock %}
