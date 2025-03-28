@@ -1,18 +1,22 @@
+<!-- filepath: c:\Computing\Computing\Year_2\WAD2\Team_Project_3C\WAD2-3C-Censura\templates\censura\write_review.html -->
 {% extends 'censura/base.html' %}
 
 {% block title_block %}
-	Write review
+    Write Review
 {% endblock %}
 
 {% block body_block %}
-<h2>Write a Review for {{ movie.name }}</h2>
+<div class="container mt-5">
+    <div class="card p-4">
+        <h2 class="text-center mb-4">Write a Review for <strong>{{ movie.name }}</strong></h2>
 
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Submit Review</button>
-</form>
+        <form method="POST" class="form-group">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit" class="btn btn-dark w-100 mt-3">Submit Review</button>
+        </form>
 
-<a href="{% url 'censura:movies' %}">Back to Movies</a>
-
+        <a href="{% url 'censura:movies' %}" class="btn btn-secondary w-100 mt-3">Back to Movies</a>
+    </div>
+</div>
 {% endblock %}
