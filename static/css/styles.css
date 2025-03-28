@@ -550,3 +550,67 @@ img {
 #search-results li:hover {
   background-color: #2f2f2f;
 }
+
+/* Wrapper for centering */
+.find-friends-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Full viewport height */
+}
+
+/* Find Friends Container */
+.find-friends-container {
+  max-width: 800px; /* Limit the width */
+  width: 100%; /* Ensure responsiveness */
+  margin: 0 auto; /* Center horizontally */
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.find-friends-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #2a2a2a;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.find-friends-list .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.find-friends-list .profile-info a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.find-friends-list .profile-info a:hover {
+  color: #04AA6D;
+}
+
+.find-friends-list .add-friend-form {
+  margin: 0;
+}
+
+.find-friends-list .btn {
+  background-color: #038a5a;
+  color: #ffffff;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.find-friends-list .btn:hover {
+  background-color: #026a45;
+}
