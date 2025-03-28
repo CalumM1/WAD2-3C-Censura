@@ -551,19 +551,19 @@ img {
   background-color: #2f2f2f;
 }
 
-/* Wrapper for centering */
+
 .find-friends-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh; /* Full viewport height */
+  min-height: 100vh;
 }
 
-/* Find Friends Container */
+
 .find-friends-container {
-  max-width: 800px; /* Limit the width */
-  width: 100%; /* Ensure responsiveness */
-  margin: 0 auto; /* Center horizontally */
+  max-width: 800px; 
+  width: 100%; 
+  margin: 0 auto; 
   padding: 20px;
   background-color: #1f1f1f;
   border-radius: 10px;
@@ -599,18 +599,4 @@ img {
 
 .find-friends-list .add-friend-form {
   margin: 0;
-}
-
-.find-friends-list .btn {
-  background-color: #038a5a;
-  color: #ffffff;
-  border: none;
-  padding: 5px 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.find-friends-list .btn:hover {
-  background-color: #026a45;
 }
