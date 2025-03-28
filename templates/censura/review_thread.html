@@ -24,6 +24,9 @@
         overflow-wrap: break-word; white-space: pre-line;
         font-family: inherit; ">{{ review.text }}</div>
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
+        {% if review.user == user %}
+        <a class="btn btn-dark" href="{% url 'censura:delete_review' review.id %}"><i class="fa fa-trash"></i></a>
+        {% endif %}
 
         <div>
             {% for comment in comments %}
