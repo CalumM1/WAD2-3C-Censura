@@ -31,20 +31,24 @@ class UserProfileForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+    def __init__(self, *args, **kwargs):
+        self.movie_instance = kwargs.pop('movie_instance', None)
+        super().__init__(*args, **kwargs)
+        if self.movie_instance:
+            self.fields['movie'].initial = self.movie_instance
+            self.fields['movie'].widget = forms.HiddenInput()
+
     class Meta:
         model = Review
         fields = ['movie', 'rating', 'text']
         widgets = {
-            'rating': forms.NumberInput(attrs={'min': 0, 'max': 10}),
+            'rating': forms.NumberInput(attrs={
+                'min': 0, 
+                'max': 10, 
+                'class': 'form-control rating-selector'
+            }),
             'text': forms.Textarea(attrs={'rows': 3}),
         }
-        
-    def __init__(self, *args, movie_instance=None, **kwargs):
-        super().__init__(*args, **kwargs)
-
-        # If a movie instance is provided, remove the 'movie' field
-        if movie_instance:
-            self.fields.pop('movie', None)
             
 class CommentForm(forms.ModelForm):
     text = forms.TextInput()

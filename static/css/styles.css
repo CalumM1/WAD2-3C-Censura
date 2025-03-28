@@ -599,3 +599,42 @@ img {
 .find-friends-list .add-friend-form {
   margin: 0;
 }
+
+.rating-selector {
+  width: 50%; 
+  max-width: 300px; 
+  padding: 10px;
+  font-size: 1.2rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  appearance: none;
+  margin: 0 auto; 
+}
+
+.rating-selector:focus {
+  outline: none;
+  border-color: #038a5a;
+  background-color: #333;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px; 
+  padding: 15px; 
+  font-size: 1rem; 
+  border: 1px solid #444; 
+  border-radius: 5px;
+  background-color: #2a2a2a; 
+  color: #f5f5f5; 
+  resize: vertical; 
+  margin: 0 auto; 
+  display: block; 
+}
+
+textarea:focus {
+  outline: none; 
+  border-color: #038a5a; 
+  background-color: #333; 
+}
