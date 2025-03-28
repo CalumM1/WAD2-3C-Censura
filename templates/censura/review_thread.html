@@ -21,7 +21,10 @@
             {% endif %}
         </div>
         <p>Rating: {{ review.rating }}/10</p>
-        <p>{{ review.text }}</p>
+        <div class="review-text" style="display: inline-block;
+        max-width: 100%; word-break: break-word;
+        overflow-wrap: break-word; white-space: pre-line;
+        font-family: inherit; ">{{ review.text }}</div>
         <p class="review-date">{{ review.created_at|date:"F d, Y" }}</p>
 
         <div>
