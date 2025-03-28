@@ -33,6 +33,7 @@
                     <li><a href="{% url 'censura:edit_profile' user.username %}">
                         Edit Profile</a></li>
                         
+                    <li><a href="{% url 'censura:find_friends' %}">Find Friends</a></li>
                     <li><a href="{% url 'censura:logout' %}">Log out</a></li>
                 {% else %}
                     <li><a href="{% url 'censura:login' %}">Login</a></li>

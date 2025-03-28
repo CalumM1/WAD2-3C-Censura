@@ -1,0 +1,31 @@
+{% extends 'censura/base.html'%}
+
+{% block title_block %}
+    Find Friends
+{% endblock %}
+
+{% block body_block %}
+<div class="find-friends-wrapper">
+    <div class="find-friends-container">
+        <h2>Find Friends</h2>
+        <ul class="find-friends-list">
+            {% for user in users %}
+                {% if user.user.username %}
+                    <li>
+                        <a href="{% url 'censura:my_account' user.user.username %}">{{ user.user.username }}</a>
+                        {% if user in friends %}
+                            <span class="friend-status">(Friend)</span>
+                        {% else %}
+                            <form method="POST" action="{% url 'censura:add_friend' user.user.username %}">
+                                {% csrf_token %}
+                                <input type="hidden" name="next" value="{{ request.get_full_path }}">
+                                <button type="submit">Add Friend</button>
+                            </form>
+                        {% endif %}
+                    </li>
+                {% endif %}
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

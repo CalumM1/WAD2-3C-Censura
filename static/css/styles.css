@@ -219,19 +219,18 @@ body {
   align-items: flex-start;
   gap: 20px; 
   max-width: 1200px; 
-  margin-left: auto;
-  margin-right: auto;
+  margin: 0 auto; 
 }
 
 .account-left {
   flex: 2; 
-  max-width: 50%; 
+  max-width: 60%; 
 }
 
 .account-right {
   flex: 1; 
+  max-width: 35%; 
   margin-left: 20px; 
-  max-width: 45%; 
 }
 
 .account-links-container {
@@ -549,4 +548,93 @@ img {
 
 #search-results li:hover {
   background-color: #2f2f2f;
+}
+
+
+.find-friends-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+
+.find-friends-container {
+  max-width: 800px; 
+  width: 100%; 
+  margin: 0 auto; 
+  padding: 20px;
+  background-color: #1f1f1f;
+  border-radius: 10px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.find-friends-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 15px;
+  margin-bottom: 10px;
+  background-color: #2a2a2a;
+  border-radius: 5px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.find-friends-list .profile-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.find-friends-list .profile-info a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.find-friends-list .profile-info a:hover {
+  color: #04AA6D;
+}
+
+.find-friends-list .add-friend-form {
+  margin: 0;
+}
+
+.rating-selector {
+  width: 50%; 
+  max-width: 300px; 
+  padding: 10px;
+  font-size: 1.2rem;
+  border: 1px solid #444;
+  border-radius: 5px;
+  background-color: #2a2a2a;
+  color: #f5f5f5;
+  appearance: none;
+  margin: 0 auto; 
+}
+
+.rating-selector:focus {
+  outline: none;
+  border-color: #038a5a;
+  background-color: #333;
+}
+
+textarea {
+  width: 100%;
+  max-width: 600px; 
+  padding: 15px; 
+  font-size: 1rem; 
+  border: 1px solid #444; 
+  border-radius: 5px;
+  background-color: #2a2a2a; 
+  color: #f5f5f5; 
+  resize: vertical; 
+  margin: 0 auto; 
+  display: block; 
+}
+
+textarea:focus {
+  outline: none; 
+  border-color: #038a5a; 
+  background-color: #333; 
 }
